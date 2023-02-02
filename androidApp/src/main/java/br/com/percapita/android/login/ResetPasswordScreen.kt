@@ -27,7 +27,7 @@ import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.R
 
 @Composable
-fun ForgotPasswordScreen() {
+fun ResetPasswordScreen() {
     MyApplicationTheme() {
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(verticalArrangement = Arrangement.Top,
@@ -102,6 +102,6 @@ fun ForgotPasswordScreen() {
 
 @Composable
 @Preview
-fun ForgotPasswordScreen_Preview() {
-    ForgotPasswordScreen()
+fun ResetPasswordScreen_Preview() {
+    ResetPasswordScreen()
 }
