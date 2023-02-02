@@ -46,4 +46,7 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended:$iconsVersion")
     implementation("androidx.navigation:navigation-compose:$navVersion")
     implementation("androidx.compose.material3:material3:$materialVersion")
+    implementation("com.google.accompanist:accompanist-pager:0.19.0")
+    implementation("io.coil-kt:coil-compose:2.2.2")
+    implementation("androidx.core:core-splashscreen:1.0.0")
 }
