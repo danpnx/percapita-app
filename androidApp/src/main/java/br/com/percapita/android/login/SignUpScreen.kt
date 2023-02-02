@@ -33,9 +33,10 @@ fun SignUpScreen() {
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(50.dp)) {
+                modifier = Modifier.padding(30.dp)) {
                 Image(painter = painterResource(id = R.drawable.percapita), contentDescription = "Logotipo",
                     contentScale = ContentScale.Fit)
+                Spacer(modifier = Modifier.height(50.dp))
             }
 
             Column(
@@ -48,7 +49,7 @@ fun SignUpScreen() {
                 val password = remember { mutableStateOf(TextFieldValue()) }
                 val confirmPassword = remember { mutableStateOf(TextFieldValue()) }
                 val passwordVisible = remember { mutableStateOf(false) }
-
+                
                 Text(
                     text = "Pronto para colocar sua renda em ordem?", fontSize = 19.sp,
                     fontWeight = FontWeight.Light
@@ -57,7 +58,7 @@ fun SignUpScreen() {
                     text = "Preencha os dados abaixo e crie sua conta!", fontSize = 19.sp,
                     fontWeight = FontWeight.Light
                 )
-                Spacer(modifier = Modifier.height(50.dp))
+                Spacer(modifier = Modifier.height(20.dp))
                 Text(
                     text = "Nome",
                     textAlign = TextAlign.Left,
