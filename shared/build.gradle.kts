@@ -47,7 +47,7 @@ kotlin {
 }
 
 android {
-    namespace = "br.com.percapita"
+    namespace = "net.azurewebsites.percapita"
     compileSdk = 32
     defaultConfig {
         minSdk = 24
