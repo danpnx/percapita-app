@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -25,15 +26,31 @@ fun MyApplicationTheme(
 ) {
     val colors = if (darkTheme) {
         darkColors(
-            primary = Color(0xFFBB86FC),
-            primaryVariant = Color(0xFF3700B3),
-            secondary = Color(0xFF03DAC5)
+            background =  Color(0xFF302D2D),
+            primary = Color(0xFF04C457),
+            onPrimary = Color(0xFFFFFFFF),
+            primaryVariant = Color(0xFF74F7AC),
+            secondary = Color(0xFF518A6B),
+            onSecondary = Color(0xFFDBF7E8),
+            secondaryVariant = Color(0xFFA4C7B4),
+            surface = Color(0xFFCACACA),
+            onSurface = Color(0xFF88AC98),
+            error = Color(0xFFDF6262),
+            onError = Color(0xFFF8F8F8)
         )
     } else {
         lightColors(
-            primary = Color(0xFF6200EE),
-            primaryVariant = Color(0xFF3700B3),
-            secondary = Color(0xFF03DAC5)
+            background =  Color(0xFFFFFFFF),
+            primary = Color(0xFF04C457),
+            onPrimary = Color(0xFFFFFFFF),
+            primaryVariant = Color(0xFF74F7AC),
+            secondary = Color(0xFF426F57),
+            onSecondary = Color(0xFFDBF7E8),
+            secondaryVariant = Color(0xFF9FB9AB),
+            surface = Color(0xFFCACACA),
+            onSurface = Color(0xFF6B8577),
+            error = Color(0xFFDF6262),
+            onError = Color(0xFFF8F8F8)
         )
     }
     val typography = Typography(
@@ -61,12 +78,18 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyApplicationTheme {
+            MyApplicationTheme(darkTheme = true) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting(Greeting().greeting())
+                    Column() {
+                        Greeting(Greeting().greeting())
+                        TextField(value = "Hello", onValueChange = {})
+                        Button(onClick = {  }) {
+                            Text(text = "Aperte")
+                        }
+                    }
                 }
             }
         }
