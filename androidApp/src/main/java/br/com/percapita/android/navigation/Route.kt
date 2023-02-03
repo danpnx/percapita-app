@@ -7,6 +7,7 @@ package br.com.percapita.android.navigation
 enum class Route {
     LOGIN,
     FORGOT_PASSWORD,
+    RESET_PASSWORD,
     SIGNUP,
     HOME_SCREEN,
     TRANSACTION_HISTORY,
