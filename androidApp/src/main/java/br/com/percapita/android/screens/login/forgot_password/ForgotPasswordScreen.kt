@@ -51,7 +51,7 @@ fun ForgotPasswordScreen() {
                 Button(
                     onClick = { /*TODO*/ },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF04C457)),
-                    modifier = Modifier.fillMaxWidth(0.7f)
+                    modifier = Modifier.fillMaxWidth(0.8f)
                 ) {
                     Text(text = "Enviar")
                 }
