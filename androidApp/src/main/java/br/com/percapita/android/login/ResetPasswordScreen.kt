@@ -32,7 +32,7 @@ fun ResetPasswordScreen() {
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(115.dp)) {
+            modifier = Modifier.padding(horizontal = 15.dp, vertical = 150.dp)) {
                 Image(painter = painterResource(id = R.drawable.percapita), contentDescription = "Logotipo",
                     contentScale = ContentScale.Fit)
             }
