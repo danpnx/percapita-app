@@ -4,20 +4,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.com.percapita.Greeting
+import br.com.percapita.android.navigation.Navigator
 
 @Composable
 fun MyApplicationTheme(
@@ -26,31 +22,33 @@ fun MyApplicationTheme(
 ) {
     val colors = if (darkTheme) {
         darkColors(
-            background =  Color(0xFF302D2D),
-            primary = Color(0xFF04C457),
-            onPrimary = Color(0xFFFFFFFF),
-            primaryVariant = Color(0xFF74F7AC),
-            secondary = Color(0xFF518A6B),
-            onSecondary = Color(0xFFDBF7E8),
-            secondaryVariant = Color(0xFFA4C7B4),
-            surface = Color(0xFFCACACA),
-            onSurface = Color(0xFF88AC98),
-            error = Color(0xFFDF6262),
-            onError = Color(0xFFF8F8F8)
+            primary = Color(0xFF41e270),
+            onPrimary = Color(0xFF003914),
+            primaryVariant = Color(0xFF005320),
+            secondary = Color(0xFF78da9f),
+            onSecondary = Color(0xFF00391f),
+            secondaryVariant = Color(0xFF00522f),
+            error = Color(0xFFffb4ab),
+            onError = Color(0xFF690005),
+            background = Color(0xFF1a1c19),
+            onBackground = Color(0xFFe2e3dd),
+            surface = Color(0xFF1a1c19),
+            onSurface = Color(0xFFe2e3dd)
         )
     } else {
         lightColors(
-            background =  Color(0xFFFFFFFF),
-            primary = Color(0xFF04C457),
+            primary = Color(0xFF006e2d),
             onPrimary = Color(0xFFFFFFFF),
-            primaryVariant = Color(0xFF74F7AC),
-            secondary = Color(0xFF426F57),
-            onSecondary = Color(0xFFDBF7E8),
-            secondaryVariant = Color(0xFF9FB9AB),
-            surface = Color(0xFFCACACA),
-            onSurface = Color(0xFF6B8577),
-            error = Color(0xFFDF6262),
-            onError = Color(0xFFF8F8F8)
+            primaryVariant = Color(0xFF67ff8b),
+            secondary = Color(0xFF006d40),
+            onSecondary = Color(0xFFFFFFFF),
+            secondaryVariant = Color(0xFF94f7ba),
+            error = Color(0xFFba1a1a),
+            onError = Color(0xFFFFFFFF),
+            background = Color(0xFFfcfdf7),
+            onBackground = Color(0xFF1a1c19),
+            surface = Color(0xFFfcfdf7),
+            onSurface = Color(0xFF1a1c19)
         )
     }
     val typography = Typography(
@@ -78,33 +76,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyApplicationTheme(darkTheme = true) {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Column() {
-                        Greeting(Greeting().greeting())
-                        TextField(value = "Hello", onValueChange = {})
-                        Button(onClick = {  }) {
-                            Text(text = "Aperte")
-                        }
-                    }
-                }
-            }
+            Navigator(isSystemDarkTheme = false)
         }
-    }
-}
-
-@Composable
-fun Greeting(text: String) {
-    Text(text = text)
-}
-
-@Preview
-@Composable
-fun DefaultPreview() {
-    MyApplicationTheme {
-        Greeting("Hello, Android!")
     }
 }
