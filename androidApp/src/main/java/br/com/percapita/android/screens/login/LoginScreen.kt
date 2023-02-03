@@ -1,4 +1,4 @@
-package br.com.percapita.android.login
+package br.com.percapita.android.screens.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -28,8 +28,8 @@ import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.R
 
 @Composable
-fun LoginScreen() {
-    MyApplicationTheme() {
+fun LoginScreen(isSystemDarkTheme: Boolean, onHomeNavigation: () -> Unit) {
+    MyApplicationTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -81,7 +81,7 @@ fun LoginScreen() {
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = { /*TODO*/ },
+            Button(onClick = { onHomeNavigation.invoke() },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF04C457))) {
                 Text(text = "Entrar", fontSize = 16.sp)
@@ -100,5 +100,11 @@ fun LoginScreen() {
 @Composable
 @Preview
 fun LoginScreen_Preview() {
-    LoginScreen()
+    LoginScreen(true) {}
+}
+
+@Composable
+@Preview
+fun LoginScreen_PreviewDark() {
+    LoginScreen(false) {}
 }

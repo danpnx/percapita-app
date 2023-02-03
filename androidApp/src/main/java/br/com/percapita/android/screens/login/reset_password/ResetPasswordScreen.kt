@@ -1,4 +1,4 @@
-package br.com.percapita.android.login
+package br.com.percapita.android.screens.login.reset_password
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
