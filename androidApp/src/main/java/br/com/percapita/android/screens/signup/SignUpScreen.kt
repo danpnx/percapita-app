@@ -33,7 +33,7 @@ fun SignUpScreen() {
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(30.dp)) {
+                modifier = Modifier.padding(horizontal = 30.dp, vertical = 60.dp)) {
                 Image(painter = painterResource(id = R.drawable.percapita), contentDescription = "Logotipo",
                     contentScale = ContentScale.Fit)
                 Spacer(modifier = Modifier.height(50.dp))
@@ -126,7 +126,7 @@ fun SignUpScreen() {
                 Button(
                     onClick = { /*TODO*/ },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF04C457)),
-                    modifier = Modifier.fillMaxWidth(0.7f)
+                    modifier = Modifier.fillMaxWidth(0.8f)
                 ) {
                     Text(text = "Criar conta")
                 }
