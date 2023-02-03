@@ -4,19 +4,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.com.percapita.android.component.BottomBar
+import br.com.percapita.android.navigation.Navigator
 
 @Composable
 fun MyApplicationTheme(
@@ -77,16 +74,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyApplicationTheme(darkTheme = false) {
-                Scaffold(
-                    bottomBar = { BottomBar(false) },
-                    scaffoldState = rememberScaffoldState()
-                ) {
-                    LazyColumn(modifier = Modifier.padding(it)) {
-
-                    }
-                }
-            }
+            Navigator(isSystemDarkTheme = false)
         }
     }
 }

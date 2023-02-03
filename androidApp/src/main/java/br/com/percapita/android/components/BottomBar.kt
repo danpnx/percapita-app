@@ -1,6 +1,5 @@
-package br.com.percapita.android.component
+package br.com.percapita.android.components
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -29,27 +28,27 @@ import br.com.percapita.android.MyApplicationTheme
 fun BottomBar(darkTheme: Boolean) {
     BottomAppBar(
         contentPadding = PaddingValues(horizontal = 20.dp),
-        containerColor = if (darkTheme) Color(0xFF3D3A3A) else Color(0xFFB8B6B6),
+        containerColor = if (darkTheme) Color(0xFF383535) else Color(0xFFF7FAF8),
         contentColor = if (darkTheme) Color.White else Color.Black,
         modifier = Modifier.height(50.dp)
     ) {
         IconButton(onClick = {  }) {
-            Icon(Icons.Filled.Home, "Página Inicial", modifier = Modifier.size(25.dp))
+            Icon(Icons.Filled.Home, "Página Inicial", modifier = Modifier.size(27.dp))
         }
         Spacer(modifier = Modifier.weight(1f))
         IconButton(onClick = {  }) {
             Icon(
                 Icons.Filled.History,
-                "Histórico de Transações", modifier = Modifier.size(25.dp)
+                "Histórico de Transações", modifier = Modifier.size(27.dp)
             )
         }
         Spacer(modifier = Modifier.weight(1f))
         IconButton(onClick = {  }) {
-            Icon(Icons.Filled.PieChart, "Relatórios", modifier = Modifier.size(25.dp))
+            Icon(Icons.Filled.PieChart, "Relatórios", modifier = Modifier.size(27.dp))
         }
         Spacer(modifier = Modifier.weight(1f))
         IconButton(onClick = {  }) {
-            Icon(Icons.Filled.Person, "Perfil", modifier = Modifier.size(25.dp))
+            Icon(Icons.Filled.Person, "Perfil", modifier = Modifier.size(27.dp))
         }
     }
 }
