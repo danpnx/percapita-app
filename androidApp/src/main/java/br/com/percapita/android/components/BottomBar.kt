@@ -15,7 +15,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.percapita.android.MyApplicationTheme
@@ -26,7 +25,7 @@ import br.com.percapita.android.MyApplicationTheme
  **/
 
 @Composable
-fun BottomBar(darkTheme: Boolean) {
+fun BottomBar() {
     BottomAppBar(
         contentPadding = PaddingValues(horizontal = 20.dp),
         containerColor = MaterialTheme.colors.background,
@@ -34,22 +33,22 @@ fun BottomBar(darkTheme: Boolean) {
         modifier = Modifier.height(50.dp)
     ) {
         IconButton(onClick = {  }) {
-            Icon(Icons.Filled.Home, "Página Inicial", modifier = Modifier.size(27.dp))
+            Icon(Icons.Filled.Home, "Página Inicial", modifier = Modifier.size(30.dp))
         }
         Spacer(modifier = Modifier.weight(1f))
         IconButton(onClick = {  }) {
             Icon(
                 Icons.Filled.History,
-                "Histórico de Transações", modifier = Modifier.size(27.dp)
+                "Histórico de Transações", modifier = Modifier.size(30.dp)
             )
         }
         Spacer(modifier = Modifier.weight(1f))
         IconButton(onClick = {  }) {
-            Icon(Icons.Filled.PieChart, "Relatórios", modifier = Modifier.size(27.dp))
+            Icon(Icons.Filled.PieChart, "Relatórios", modifier = Modifier.size(30.dp))
         }
         Spacer(modifier = Modifier.weight(1f))
         IconButton(onClick = {  }) {
-            Icon(Icons.Filled.Person, "Perfil", modifier = Modifier.size(27.dp))
+            Icon(Icons.Filled.Person, "Perfil", modifier = Modifier.size(30.dp))
         }
     }
 }
@@ -58,7 +57,7 @@ fun BottomBar(darkTheme: Boolean) {
 @Composable
 fun BottomBarPreview() {
     MyApplicationTheme(false) {
-        BottomBar(false)
+        BottomBar()
     }
 }
 
@@ -66,6 +65,6 @@ fun BottomBarPreview() {
 @Composable
 fun BottomBarPreviewDark() {
     MyApplicationTheme(darkTheme = true) {
-        BottomBar(true)
+        BottomBar()
     }
 }
