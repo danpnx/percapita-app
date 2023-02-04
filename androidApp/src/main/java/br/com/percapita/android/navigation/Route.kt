@@ -10,7 +10,7 @@ enum class Route {
     RESET_PASSWORD,
     SIGNUP,
     HOME_SCREEN,
-    TRANSACTION_HISTORY,
+    HISTORY,
     REPORT_SCREEN,
     PROFILE
 }

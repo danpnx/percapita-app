@@ -30,25 +30,25 @@ fun BottomBar(darkTheme: Boolean) {
         contentPadding = PaddingValues(horizontal = 20.dp),
         containerColor = if (darkTheme) Color(0xFF383535) else Color(0xFFF7FAF8),
         contentColor = if (darkTheme) Color.White else Color.Black,
-        modifier = Modifier.height(50.dp)
+        modifier = Modifier.height(55.dp)
     ) {
         IconButton(onClick = {  }) {
-            Icon(Icons.Filled.Home, "Página Inicial", modifier = Modifier.size(27.dp))
+            Icon(Icons.Filled.Home, "Página Inicial", modifier = Modifier.size(30.dp))
         }
         Spacer(modifier = Modifier.weight(1f))
         IconButton(onClick = {  }) {
             Icon(
                 Icons.Filled.History,
-                "Histórico de Transações", modifier = Modifier.size(27.dp)
+                "Histórico de Transações", modifier = Modifier.size(30.dp)
             )
         }
         Spacer(modifier = Modifier.weight(1f))
         IconButton(onClick = {  }) {
-            Icon(Icons.Filled.PieChart, "Relatórios", modifier = Modifier.size(27.dp))
+            Icon(Icons.Filled.PieChart, "Relatórios", modifier = Modifier.size(30.dp))
         }
         Spacer(modifier = Modifier.weight(1f))
         IconButton(onClick = {  }) {
-            Icon(Icons.Filled.Person, "Perfil", modifier = Modifier.size(27.dp))
+            Icon(Icons.Filled.Person, "Perfil", modifier = Modifier.size(30.dp))
         }
     }
 }
@@ -56,7 +56,7 @@ fun BottomBar(darkTheme: Boolean) {
 @Preview(name = "Bottom Bar Preview - Light", showBackground = true)
 @Composable
 fun BottomBarPreview() {
-    MyApplicationTheme() {
+    MyApplicationTheme(darkTheme = true) {
         BottomBar(false)
     }
 }
