@@ -34,7 +34,7 @@ import br.com.percapita.android.util.Lists.transactionList
 fun HistoryScreen(isSystemDarkTheme: Boolean) {
     MyApplicationTheme(darkTheme = isSystemDarkTheme) {
         Scaffold(
-            bottomBar = { BottomBar(darkTheme = isSystemDarkTheme) },
+            bottomBar = { BottomBar() },
             topBar = { HistoryTopBar(title = "Histórico") },
             floatingActionButton = { AddTransactionFAB() }
         ) {
