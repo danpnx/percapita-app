@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Home
@@ -28,8 +29,8 @@ import br.com.percapita.android.MyApplicationTheme
 fun BottomBar(darkTheme: Boolean) {
     BottomAppBar(
         contentPadding = PaddingValues(horizontal = 20.dp),
-        containerColor = if (darkTheme) Color(0xFF383535) else Color(0xFFF7FAF8),
-        contentColor = if (darkTheme) Color.White else Color.Black,
+        containerColor = MaterialTheme.colors.background,
+        contentColor = MaterialTheme.colors.onBackground,
         modifier = Modifier.height(50.dp)
     ) {
         IconButton(onClick = {  }) {
@@ -56,7 +57,7 @@ fun BottomBar(darkTheme: Boolean) {
 @Preview(name = "Bottom Bar Preview - Light", showBackground = true)
 @Composable
 fun BottomBarPreview() {
-    MyApplicationTheme() {
+    MyApplicationTheme(false) {
         BottomBar(false)
     }
 }

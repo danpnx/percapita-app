@@ -33,7 +33,7 @@ fun MyApplicationTheme(
             background = Color(0xFF1a1c19),
             onBackground = Color(0xFFe2e3dd),
             surface = Color(0xFF1a1c19),
-            onSurface = Color(0xFFe2e3dd)
+            onSurface = Color(0xFFC8C9C3)
         )
     } else {
         lightColors(
@@ -48,7 +48,7 @@ fun MyApplicationTheme(
             background = Color(0xFFfcfdf7),
             onBackground = Color(0xFF1a1c19),
             surface = Color(0xFFfcfdf7),
-            onSurface = Color(0xFF1a1c19)
+            onSurface = Color(0xFFBBC9B3)
         )
     }
     val typography = Typography(
