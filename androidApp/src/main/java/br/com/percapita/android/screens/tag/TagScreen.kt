@@ -24,20 +24,44 @@ fun TagScreen(isSystemDarkTheme: Boolean) {
             bottomBar = { BottomBar() },
             topBar = { TopBar(title = "Tags") }
         ) {
-            LazyColumn(
-                modifier = Modifier.padding(it),
-                horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.Center
-            ) {
-                items(tagList) { tag ->
-                    TagCard(tag = tag)
+            Column {
+                Spacer(modifier = Modifier.height(16.dp))
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(it)
+                        .height(450.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    items(tagList) { tag ->
+                        TagCard(tag = tag)
+                    }
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Button(onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .fillMaxWidth(0.8f)
+                        .padding(1.dp)
+                        .align(Alignment.CenterHorizontally)) {
+                    Text(text = "Criar nova Tag")
                 }
             }
         }
     }
 }
+
 @Composable
 @Preview
 fun TagScreen_Preview() {
-    TagScreen(isSystemDarkTheme = false)
+    MyApplicationTheme(darkTheme = false) {
+        TagScreen(isSystemDarkTheme = false)
+    }
+}
+
+@Composable
+@Preview
+fun TagScreenDark_Preview() {
+    MyApplicationTheme(darkTheme = true) {
+        TagScreen(isSystemDarkTheme = true)
+    }
 }

@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -21,7 +22,9 @@ fun TopBar(title: String) {
             title = {Text(
                 text = title,
                 fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.width(240.dp)
             )},
             navigationIcon = {
                 IconButton(onClick = { }) {
@@ -29,12 +32,7 @@ fun TopBar(title: String) {
                 }
             },
             backgroundColor = MaterialTheme.colors.onSurface,
-            modifier = Modifier.height(80.dp),
-            actions = {
-                IconButton(onClick = { /* doSomething() */ }) {
-                    Icon(Icons.Filled.Menu, contentDescription = "Mini Menu")
-                }
-            }
+            modifier = Modifier.height(80.dp)
         )
     }
 }
