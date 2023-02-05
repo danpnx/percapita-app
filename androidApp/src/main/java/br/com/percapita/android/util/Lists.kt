@@ -2,6 +2,7 @@ package br.com.percapita.android.util
 
 import br.com.percapita.enums.TransactionCategory
 import br.com.percapita.model.FinancialTransaction
+import br.com.percapita.model.Tag
 
 object Lists {
     val transactionList = listOf(
@@ -94,6 +95,48 @@ object Lists {
             "",
             "Jogos",
             listOf()
+        )
+    )
+    val tagList = listOf(
+        Tag(
+            tagId = "1",
+            tagName = "Padaria"
+        ),
+        Tag(
+            tagId = "2",
+            tagName = "Supermercado"
+        ),
+        Tag(
+            tagId = "3",
+            tagName = "Vendas"
+        ),
+        Tag(
+            tagId = "4",
+            tagName = "Pizzaria"
+        ),
+        Tag(
+            tagId = "5",
+            tagName = "Uber"
+        ),
+        Tag(
+            tagId = "6",
+            tagName = "Assinaturas"
+        ),
+        Tag(
+            tagId = "7",
+            tagName = "Salário"
+        ),
+        Tag(
+            tagId = "8",
+            tagName = "Jogos"
+        ),
+        Tag(
+            tagId = "9",
+            tagName = "Investimento"
+        ),
+        Tag(
+            tagId = "10",
+            tagName = "Restaurante"
         )
     )
 }
