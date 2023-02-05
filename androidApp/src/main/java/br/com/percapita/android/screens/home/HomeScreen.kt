@@ -18,7 +18,7 @@ import br.com.percapita.android.components.BottomBar
 fun HomeScreen(isSystemDarkTheme: Boolean) {
     MyApplicationTheme(darkTheme = isSystemDarkTheme) {
         Scaffold(
-            bottomBar = { BottomBar(isSystemDarkTheme) },
+            bottomBar = { BottomBar() },
             scaffoldState = rememberScaffoldState()
         ) {
             LazyColumn(modifier = Modifier.padding(it)) {
