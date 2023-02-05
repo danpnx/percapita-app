@@ -32,12 +32,7 @@ fun TopBar(title: String) {
                 }
             },
             backgroundColor = MaterialTheme.colors.onSurface,
-            modifier = Modifier.height(80.dp),
-            actions = {
-                IconButton(onClick = { /* doSomething() */ }) {
-                    Icon(Icons.Filled.Menu, contentDescription = "Mini Menu")
-                }
-            }
+            modifier = Modifier.height(80.dp)
         )
     }
 }
