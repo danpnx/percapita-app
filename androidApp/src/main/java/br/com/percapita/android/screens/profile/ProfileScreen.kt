@@ -1,7 +1,11 @@
 package br.com.percapita.android.screens.configuration
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Brightness4
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -11,30 +15,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.percapita.android.MyApplicationTheme
-import br.com.percapita.android.components.BottomBarPreview
-import br.com.percapita.android.components.BottomBarPreviewDark
-import br.com.percapita.android.components.ButtonDarkModePreview
-import br.com.percapita.android.components.ButtonDarkModePreviewDark
+import br.com.percapita.android.components.*
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun ConfigurationScreen(darkTheme: Boolean) {
     MyApplicationTheme(darkTheme) {
-        Surface(modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background,
-            contentColor = MaterialTheme.colors.onBackground) {
 
-            Column(verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 30.dp)){
-                Text(
-                    text = "Perfil",
-                    fontSize = 25.sp,
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.fillMaxWidth(0.8f))
-            }
+        Scaffold(modifier = Modifier.fillMaxSize(),
+            backgroundColor = MaterialTheme.colors.background,
+            contentColor = MaterialTheme.colors.onBackground,
+            topBar = { TopBar(title = "Editar Perfil") },
+            bottomBar = { BottomBar() })  {
 
-            if (darkTheme) ButtonDarkModePreviewDark() else ButtonDarkModePreview()
+            ButtonDarkMode(darkTheme = darkTheme)
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -81,9 +75,6 @@ fun ConfigurationScreen(darkTheme: Boolean) {
                     Text(text = "Sair", fontSize = 16.sp)
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
-
-                if (darkTheme) BottomBarPreviewDark() else BottomBarPreview()
             }
 
         }

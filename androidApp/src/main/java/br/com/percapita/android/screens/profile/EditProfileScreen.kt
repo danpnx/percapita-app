@@ -1,5 +1,6 @@
 package br.com.percapita.android.screens.profile
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -21,33 +22,26 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.percapita.android.MyApplicationTheme
+import br.com.percapita.android.components.BottomBar
 import br.com.percapita.android.components.ButtonDarkModePreview
 import br.com.percapita.android.components.ButtonDarkModePreviewDark
+import br.com.percapita.android.components.TopBar
 
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun ProfileScreen(darkTheme: Boolean) {
     MyApplicationTheme(darkTheme) {
-        Surface(modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colors.background,
-                contentColor = MaterialTheme.colors.onBackground) {
 
-            Column(verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 30.dp)){
-                Text(
-                    text = "Editar Perfil",
-                    fontSize = 25.sp,
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.fillMaxWidth(0.9f))
-            }
-
-            if (darkTheme) ButtonDarkModePreviewDark() else ButtonDarkModePreview()
+        Scaffold(modifier = Modifier.fillMaxSize(),
+                backgroundColor = MaterialTheme.colors.background,
+                contentColor = MaterialTheme.colors.onBackground,
+                topBar = {TopBar(title = "Editar Perfil")},
+                bottomBar = { BottomBar() }) {
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(16.dp, vertical = 100.dp)) {
+                modifier = Modifier.padding(16.dp, vertical = 40.dp)) {
                 val userName = remember { mutableStateOf(TextFieldValue()) }
                 val userEmail = remember { mutableStateOf(TextFieldValue()) }
                 val confirmNewPassowrd = remember { mutableStateOf(TextFieldValue())}
