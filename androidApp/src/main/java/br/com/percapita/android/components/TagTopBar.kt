@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.sp
 import br.com.percapita.android.MyApplicationTheme
 
 @Composable
-fun TopBar(title: String) {
+fun TopBar(title: String, onBack: () -> Unit) {
     MyApplicationTheme {
         TopAppBar(
             title = {Text(
@@ -31,8 +31,7 @@ fun TopBar(title: String) {
                     Icon(imageVector = Icons.Filled.ArrowBackIosNew, contentDescription = "Voltar")
                 }
             },
-            backgroundColor = MaterialTheme.colors.onSurface,
-            modifier = Modifier.height(80.dp)
+            backgroundColor = MaterialTheme.colors.onSurface
         )
     }
 }
@@ -40,5 +39,5 @@ fun TopBar(title: String) {
 @Composable
 @Preview
 fun TopBar_Preview() {
-    TopBar("Teste")
+    TopBar("Teste", onBack = {})
 }
