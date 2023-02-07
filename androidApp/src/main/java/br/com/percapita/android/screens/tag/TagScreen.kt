@@ -15,15 +15,15 @@ import androidx.compose.ui.unit.dp
 import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.components.BottomBar
 import br.com.percapita.android.components.TagCard
-import br.com.percapita.android.components.TagTopBar
+import br.com.percapita.android.components.TopBar
 import br.com.percapita.android.util.Lists.tagList
 
 @Composable
-fun TagScreen(isSystemDarkTheme: Boolean) {
+fun TagScreen(isSystemDarkTheme: Boolean, onBack: () -> Unit) {
     MyApplicationTheme(darkTheme = isSystemDarkTheme) {
         Scaffold(
             bottomBar = { BottomBar() },
-            topBar = { TagTopBar(title = "Tags", darkTheme = isSystemDarkTheme) },
+            topBar = { TopBar(title = "Tags", darkTheme = isSystemDarkTheme, onBack = { onBack }) },
             floatingActionButton = { AddTag() }
         ) {
             Column {
@@ -64,11 +64,11 @@ fun AddTag() {
 @Composable
 @Preview
 fun TagScreen_Preview() {
-        TagScreen(isSystemDarkTheme = false)
+        TagScreen(isSystemDarkTheme = false, onBack = {})
 }
 
 @Composable
 @Preview
 fun TagScreenDark_Preview() {
-        TagScreen(isSystemDarkTheme = true)
+        TagScreen(isSystemDarkTheme = true, onBack = {})
 }
