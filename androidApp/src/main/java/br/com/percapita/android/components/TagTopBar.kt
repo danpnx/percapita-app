@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.sp
 import br.com.percapita.android.MyApplicationTheme
 
 @Composable
-fun TagTopBar(title: String, darkTheme: Boolean) {
+fun TopBar(title: String, darkTheme: Boolean, onBack: () -> Unit) {
     MyApplicationTheme(darkTheme) {
         TopAppBar(
             title = {Text(
@@ -23,14 +23,15 @@ fun TagTopBar(title: String, darkTheme: Boolean) {
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.width(240.dp)
+                modifier = Modifier.width(240.dp),
+                color = MaterialTheme.colors.onBackground
             )},
             navigationIcon = {
                 IconButton(onClick = { }) {
                     Icon(imageVector = Icons.Filled.ArrowBackIosNew, contentDescription = "Voltar")
                 }
             },
-            backgroundColor = MaterialTheme.colors.surface
+            backgroundColor = MaterialTheme.colors.background
         )
     }
 }
@@ -39,7 +40,7 @@ fun TagTopBar(title: String, darkTheme: Boolean) {
 @Preview
 fun TopBar_Preview() {
     MyApplicationTheme(false) {
-        TagTopBar("Teste", darkTheme = false)
+        TopBar("Teste", darkTheme = false, onBack = {})
     }
 }
 
@@ -47,6 +48,6 @@ fun TopBar_Preview() {
 @Preview
 fun TopBarDark_Preview() {
     MyApplicationTheme(true) {
-        TagTopBar("Teste", darkTheme = true)
+        TopBar("Teste", darkTheme = true, onBack = {})
     }
 }
