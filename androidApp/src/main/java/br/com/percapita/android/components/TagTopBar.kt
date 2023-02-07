@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,8 +15,8 @@ import androidx.compose.ui.unit.sp
 import br.com.percapita.android.MyApplicationTheme
 
 @Composable
-fun TopBar(title: String, onBack: () -> Unit) {
-    MyApplicationTheme {
+fun TagTopBar(title: String, darkTheme: Boolean) {
+    MyApplicationTheme(darkTheme) {
         TopAppBar(
             title = {Text(
                 text = title,
@@ -31,7 +30,7 @@ fun TopBar(title: String, onBack: () -> Unit) {
                     Icon(imageVector = Icons.Filled.ArrowBackIosNew, contentDescription = "Voltar")
                 }
             },
-            backgroundColor = MaterialTheme.colors.onSurface
+            backgroundColor = MaterialTheme.colors.surface
         )
     }
 }
@@ -39,5 +38,15 @@ fun TopBar(title: String, onBack: () -> Unit) {
 @Composable
 @Preview
 fun TopBar_Preview() {
-    TopBar("Teste", onBack = {})
+    MyApplicationTheme(false) {
+        TagTopBar("Teste", darkTheme = false)
+    }
+}
+
+@Composable
+@Preview
+fun TopBarDark_Preview() {
+    MyApplicationTheme(true) {
+        TagTopBar("Teste", darkTheme = true)
+    }
 }
