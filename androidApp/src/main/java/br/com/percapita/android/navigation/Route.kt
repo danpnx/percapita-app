@@ -11,6 +11,7 @@ enum class Route {
     SIGNUP,
     HOME_SCREEN,
     HISTORY,
+    REGISTER_TRANSACTION,
     REPORT_SCREEN,
     PROFILE
 }

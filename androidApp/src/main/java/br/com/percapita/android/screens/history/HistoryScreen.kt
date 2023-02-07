@@ -9,18 +9,13 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.components.BottomBar
+import br.com.percapita.android.components.TopBar
 import br.com.percapita.android.components.TransactionCard
 import br.com.percapita.android.util.Lists.transactionList
 
@@ -35,7 +30,7 @@ fun HistoryScreen(isSystemDarkTheme: Boolean) {
     MyApplicationTheme(darkTheme = isSystemDarkTheme) {
         Scaffold(
             bottomBar = { BottomBar() },
-            topBar = { HistoryTopBar(title = "Histórico") },
+            topBar = { TopBar(title = "Histórico") },
             floatingActionButton = { AddTransactionFAB() }
         ) {
             LazyColumn(modifier = Modifier.padding(it)) {
@@ -44,35 +39,6 @@ fun HistoryScreen(isSystemDarkTheme: Boolean) {
                 }
             }
         }
-    }
-}
-
-@Composable
-fun HistoryTopBar(title: String) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .paddingFromBaseline(bottom = 50.dp)
-            .padding(top = 1.5.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IconButton(onClick = {}) {
-            Icon(
-                imageVector = Icons.Filled.ArrowBackIosNew,
-                contentDescription = "Voltar",
-                tint = MaterialTheme.colors.onBackground,
-                modifier = Modifier.padding(start = 10.dp)
-            )
-        }
-        Spacer(modifier = Modifier.weight(1f))
-        Text(
-            text = title,
-            color = MaterialTheme.colors.onBackground,
-            fontSize = 25.sp,
-            fontStyle = FontStyle.Normal,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.weight(2.5f)
-        )
     }
 }
 
