@@ -27,7 +27,7 @@ fun TopBar(title: String, darkTheme: Boolean, onBack: () -> Unit) {
                 color = MaterialTheme.colors.onBackground
             )},
             navigationIcon = {
-                IconButton(onClick = { }) {
+                IconButton(onClick = { onBack }) {
                     Icon(imageVector = Icons.Filled.ArrowBackIosNew, contentDescription = "Voltar")
                 }
             },
