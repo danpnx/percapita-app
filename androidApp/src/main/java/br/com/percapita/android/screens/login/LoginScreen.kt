@@ -28,7 +28,12 @@ import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.R
 
 @Composable
-fun LoginScreen(isSystemDarkTheme: Boolean, onHomeNavigation: () -> Unit) {
+fun LoginScreen(
+    isSystemDarkTheme: Boolean,
+    onHomeNavigation: () -> Unit,
+    onSignUpNavigation: () -> Unit,
+    onForgotPasswordNavigation: () -> Unit
+) {
     MyApplicationTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(
@@ -75,7 +80,7 @@ fun LoginScreen(isSystemDarkTheme: Boolean, onHomeNavigation: () -> Unit) {
                     }
                 } )
 
-            TextButton(onClick = { }) {
+            TextButton(onClick = { onForgotPasswordNavigation.invoke() }) {
                 Text(text = "Esqueci minha senha", modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.End, color = Color.Black)
             }
@@ -88,7 +93,7 @@ fun LoginScreen(isSystemDarkTheme: Boolean, onHomeNavigation: () -> Unit) {
             }
 
             Spacer(modifier = Modifier.height(20.dp))
-            TextButton(onClick = { /*TODO*/ }) {
+            TextButton(onClick = { onSignUpNavigation.invoke() }) {
                 Text(text = "Criar conta", modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center, fontSize = 16.sp, color = Color.Black)
             }
@@ -100,11 +105,5 @@ fun LoginScreen(isSystemDarkTheme: Boolean, onHomeNavigation: () -> Unit) {
 @Composable
 @Preview
 fun LoginScreen_Preview() {
-    LoginScreen(true) {}
-}
-
-@Composable
-@Preview
-fun LoginScreen_PreviewDark() {
-    LoginScreen(false) {}
+    LoginScreen(isSystemDarkTheme = false, {}, {}) {}
 }
