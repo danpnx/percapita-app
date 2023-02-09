@@ -37,7 +37,7 @@ fun ConfigurationScreen(darkTheme: Boolean, onBack: () -> Unit, onSaveChanges: (
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(16.dp, vertical = 40.dp)) {
+                modifier = Modifier.padding(16.dp, vertical = 40.dp).fillMaxSize()) {
                 val userName = remember { mutableStateOf(TextFieldValue()) }
                 val userEmail = remember { mutableStateOf(TextFieldValue()) }
                 val confirmNewPassowrd = remember { mutableStateOf(TextFieldValue())}
@@ -171,12 +171,12 @@ fun ConfigurationScreen(darkTheme: Boolean, onBack: () -> Unit, onSaveChanges: (
 
 @Composable
 @Preview
-fun ProfileScreen_Preview() {
+fun EditProfileScreen_Preview() {
     ConfigurationScreen(darkTheme = false, onBack = {}, onSaveChanges = {})
 }
 
 @Composable
 @Preview
-fun ProfileScreen_PreviewDark() {
+fun EditProfileScreen_PreviewDark() {
     ConfigurationScreen(darkTheme = true, onBack = {}, onSaveChanges = {})
 }
