@@ -1,15 +1,11 @@
-package br.com.percapita.android.screens.configuration
+package br.com.percapita.android.screens.profile
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Brightness4
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -19,14 +15,13 @@ import br.com.percapita.android.components.*
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ConfigurationScreen(darkTheme: Boolean) {
+fun ConfigurationScreen(darkTheme: Boolean, onBack: () -> Unit) {
     MyApplicationTheme(darkTheme) {
 
         Scaffold(modifier = Modifier.fillMaxSize(),
             backgroundColor = MaterialTheme.colors.background,
             contentColor = MaterialTheme.colors.onBackground,
-            topBar = { TopBar(title = "Editar Perfil") },
-            bottomBar = { BottomBar() })  {
+            topBar = { TopBar(title = "Editar Perfil", onBack) })  {
 
             ButtonDarkMode(darkTheme = darkTheme)
 
@@ -85,7 +80,7 @@ fun ConfigurationScreen(darkTheme: Boolean) {
 @Preview
 fun ConfigurationScreen_Preview() {
     MyApplicationTheme(false){
-        ConfigurationScreen(false)
+        ConfigurationScreen(darkTheme = false, onBack = {})
     }
 }
 
@@ -93,6 +88,6 @@ fun ConfigurationScreen_Preview() {
 @Preview
 fun ConfigurationScreen_PreviewDark() {
     MyApplicationTheme(true){
-        ConfigurationScreen(true)
+        ConfigurationScreen(darkTheme = true, onBack = {})
     }
 }

@@ -13,5 +13,7 @@ enum class Route {
     HISTORY,
     REGISTER_TRANSACTION,
     REPORT_SCREEN,
-    PROFILE
+    PROFILE,
+    TAG_SCREEN,
+    CREATE_TAG_SCREEN
 }

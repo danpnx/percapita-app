@@ -16,14 +16,14 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.percapita.android.MyApplicationTheme
-import br.com.percapita.android.components.TagTopBar
+import br.com.percapita.android.components.TopBar
 
 @Composable
 fun CreateTagScreen(isSystemDarkTheme: Boolean, onBack: () -> Unit) {
     MyApplicationTheme(darkTheme = isSystemDarkTheme) {
         Scaffold(
             topBar = {
-                TagTopBar(title = "Criar Tag", darkTheme = isSystemDarkTheme, onBack = {onBack}) }
+                TopBar(title = "Criar Tag", darkTheme = isSystemDarkTheme, onBack = {onBack}) }
         ) { it
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,

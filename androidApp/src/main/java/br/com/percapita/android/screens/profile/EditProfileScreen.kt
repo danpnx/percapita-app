@@ -12,7 +12,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
@@ -21,23 +20,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.components.BottomBar
-import br.com.percapita.android.components.ButtonDarkModePreview
-import br.com.percapita.android.components.ButtonDarkModePreviewDark
 import br.com.percapita.android.components.TopBar
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ProfileScreen(darkTheme: Boolean) {
+fun ProfileScreen(darkTheme: Boolean, navController: NavController, onBack: () -> Unit) {
     MyApplicationTheme(darkTheme) {
 
         Scaffold(modifier = Modifier.fillMaxSize(),
                 backgroundColor = MaterialTheme.colors.background,
                 contentColor = MaterialTheme.colors.onBackground,
-                topBar = {TopBar(title = "Editar Perfil")},
-                bottomBar = { BottomBar() }) {
+                topBar = {TopBar(title = "Editar Perfil", onBack)},
+                bottomBar = { BottomBar(navController) }) {
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -176,11 +175,11 @@ fun ProfileScreen(darkTheme: Boolean) {
 @Composable
 @Preview
 fun ProfileScreen_Preview() {
-    ProfileScreen(false)
+    ProfileScreen(darkTheme = false, navController = rememberNavController(), onBack = {})
 }
 
 @Composable
 @Preview
 fun ProfileScreen_PreviewDark() {
-    ProfileScreen(true)
+    ProfileScreen(darkTheme = true, navController = rememberNavController(), onBack = {})
 }

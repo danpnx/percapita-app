@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
  **/
 
 @Composable
-fun TopBar(title: String) {
+fun TopBar(title: String, onBack: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -29,7 +29,7 @@ fun TopBar(title: String) {
             .padding(top = 1.5.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(onClick = {}) {
+        IconButton(onClick = onBack) {
             Icon(
                 imageVector = Icons.Filled.ArrowBackIosNew,
                 contentDescription = "Voltar",

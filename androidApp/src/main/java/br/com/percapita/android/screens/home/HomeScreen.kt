@@ -6,6 +6,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.components.BottomBar
 
@@ -15,10 +16,10 @@ import br.com.percapita.android.components.BottomBar
  **/
 
 @Composable
-fun HomeScreen(isSystemDarkTheme: Boolean) {
+fun HomeScreen(isSystemDarkTheme: Boolean, navController: NavController) {
     MyApplicationTheme(darkTheme = isSystemDarkTheme) {
         Scaffold(
-            bottomBar = { BottomBar() },
+            bottomBar = { BottomBar(navController) },
             scaffoldState = rememberScaffoldState()
         ) {
             LazyColumn(modifier = Modifier.padding(it)) {

@@ -13,6 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.components.BottomBar
 import br.com.percapita.android.components.TopBar
@@ -26,12 +28,17 @@ import br.com.percapita.android.util.Lists.transactionList
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HistoryScreen(isSystemDarkTheme: Boolean) {
+fun HistoryScreen(
+    isSystemDarkTheme: Boolean,
+    navController: NavController,
+    onBack: () -> Unit,
+    onClickRegisterTransaction: () -> Unit
+) {
     MyApplicationTheme(darkTheme = isSystemDarkTheme) {
         Scaffold(
-            bottomBar = { BottomBar() },
-            topBar = { TopBar(title = "Histórico") },
-            floatingActionButton = { AddTransactionFAB() }
+            bottomBar = { BottomBar(navController) },
+            topBar = { TopBar(title = "Histórico", onBack = onBack) },
+            floatingActionButton = { AddTransactionFAB(onClickRegisterTransaction) }
         ) {
             LazyColumn(modifier = Modifier.padding(it)) {
                 items(transactionList) { transaction ->
@@ -43,9 +50,9 @@ fun HistoryScreen(isSystemDarkTheme: Boolean) {
 }
 
 @Composable
-fun AddTransactionFAB() {
+fun AddTransactionFAB(onClickRegisterTransaction: () -> Unit) {
     FloatingActionButton(
-        onClick = {},
+        onClick = onClickRegisterTransaction,
         shape = CircleShape,
         backgroundColor = MaterialTheme.colors.primary,
         contentColor = MaterialTheme.colors.onPrimary,
@@ -62,21 +69,31 @@ fun AddTransactionFAB() {
 @Preview(name = "History Screen Preview - Light")
 @Composable
 fun HistoryScreenPreview() {
-    HistoryScreen(false)
+    HistoryScreen(
+        isSystemDarkTheme = false,
+        navController = rememberNavController(),
+        onBack = {},
+        onClickRegisterTransaction = {}
+    )
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(name = "History Screen Preview - Dark")
 @Composable
 fun HistoryScreenPreviewDark() {
-    HistoryScreen(true)
+    HistoryScreen(
+        isSystemDarkTheme = true,
+        navController = rememberNavController(),
+        onBack = {},
+        onClickRegisterTransaction = {}
+    )
 }
 
 @Preview(name = "Add Transaction FAB Preview - Light", showBackground = true)
 @Composable
 fun AddTransactionFABPreview() {
     MyApplicationTheme(darkTheme = false) {
-        AddTransactionFAB()
+        AddTransactionFAB(onClickRegisterTransaction = {})
     }
 }
 
@@ -84,6 +101,6 @@ fun AddTransactionFABPreview() {
 @Composable
 fun AddTransactionFABDark() {
     MyApplicationTheme(darkTheme = true) {
-        AddTransactionFAB()
+        AddTransactionFAB(onClickRegisterTransaction = {})
     }
 }
