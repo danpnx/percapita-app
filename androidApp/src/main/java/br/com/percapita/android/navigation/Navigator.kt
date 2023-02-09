@@ -11,6 +11,7 @@ import br.com.percapita.android.screens.history.HistoryScreen
 import br.com.percapita.android.screens.home.HomeScreen
 import br.com.percapita.android.screens.login.LoginScreen
 import br.com.percapita.android.screens.login.forgot_password.ForgotPasswordScreen
+import br.com.percapita.android.screens.profile.ConfigurationScreen
 import br.com.percapita.android.screens.profile.ProfileScreen
 import br.com.percapita.android.screens.register_transaction.RegisterTransactionScreen
 import br.com.percapita.android.screens.report.ReportScreen
@@ -46,11 +47,11 @@ fun Navigator(
         }
 
         composable(Route.SIGNUP.name) {
-            SignUpScreen()
+            SignUpScreen(onLoginNavigation = { navHostController.navigate(Route.LOGIN.name) })
         }
 
         composable(Route.FORGOT_PASSWORD.name) {
-            ForgotPasswordScreen()
+            ForgotPasswordScreen(onLoginScreen = { navHostController.navigate(Route.LOGIN.name) })
         }
 
         composable(Route.HISTORY.name) {
@@ -80,9 +81,7 @@ fun Navigator(
         }
 
         composable(Route.CREATE_TAG_SCREEN.name) {
-            CreateTagScreen(isSystemDarkTheme = isSystemDarkTheme) {
-
-            }
+            CreateTagScreen(isSystemDarkTheme = isSystemDarkTheme, onBack = { navHostController.popBackStack() })
         }
 
         composable(Route.REPORT_SCREEN.name) {
@@ -97,7 +96,16 @@ fun Navigator(
             ProfileScreen(
                 darkTheme = isSystemDarkTheme,
                 navController = navHostController,
-                onBack = { navHostController.popBackStack() }
+                onBack = { navHostController.popBackStack() },
+                onEditProfile = { navHostController.navigate(Route.CONFIG_SCREEN.name) }
+            )
+        }
+
+        composable(Route.CONFIG_SCREEN.name) {
+            ConfigurationScreen(
+                darkTheme = isSystemDarkTheme,
+                onBack = { navHostController.popBackStack() },
+                onSaveChanges = {}
             )
         }
     }

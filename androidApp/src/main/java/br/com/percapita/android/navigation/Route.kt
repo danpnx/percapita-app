@@ -15,5 +15,6 @@ enum class Route {
     REPORT_SCREEN,
     PROFILE,
     TAG_SCREEN,
-    CREATE_TAG_SCREEN
+    CREATE_TAG_SCREEN,
+    CONFIG_SCREEN
 }

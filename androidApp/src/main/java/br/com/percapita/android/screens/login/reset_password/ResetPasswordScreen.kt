@@ -54,6 +54,7 @@ fun ResetPasswordScreen() {
                     value = newPassword.value,
                     onValueChange = { newPassword.value = it },
                     label = { Text(text = "Senha") },
+                    singleLine = true,
                     visualTransformation = if(passwordVisible.value.not()) PasswordVisualTransformation() else VisualTransformation.None,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     trailingIcon = {

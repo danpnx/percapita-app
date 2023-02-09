@@ -10,20 +10,29 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.components.*
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ConfigurationScreen(darkTheme: Boolean, onBack: () -> Unit) {
+fun ProfileScreen(
+    darkTheme: Boolean,
+    navController: NavController,
+    onBack: () -> Unit,
+    onEditProfile: () -> Unit
+) {
     MyApplicationTheme(darkTheme) {
 
         Scaffold(modifier = Modifier.fillMaxSize(),
             backgroundColor = MaterialTheme.colors.background,
             contentColor = MaterialTheme.colors.onBackground,
-            topBar = { TopBar(title = "Editar Perfil", onBack) })  {
+            topBar = { TopBar(title = "Editar Perfil", onBack) },
+            bottomBar = { BottomBar(navController) }
+        ) {
 
-            ButtonDarkMode(darkTheme = darkTheme)
+            ButtonDarkMode()
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -52,7 +61,7 @@ fun ConfigurationScreen(darkTheme: Boolean, onBack: () -> Unit) {
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                Button(onClick = { /*TODO*/ },
+                Button(onClick = onEditProfile,
                     modifier = Modifier.fillMaxWidth(0.8f),
                     colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary))
                 {
@@ -80,7 +89,12 @@ fun ConfigurationScreen(darkTheme: Boolean, onBack: () -> Unit) {
 @Preview
 fun ConfigurationScreen_Preview() {
     MyApplicationTheme(false){
-        ConfigurationScreen(darkTheme = false, onBack = {})
+        ProfileScreen(
+            darkTheme = false,
+            navController = rememberNavController(),
+            onBack = {},
+            onEditProfile = {}
+        )
     }
 }
 
@@ -88,6 +102,11 @@ fun ConfigurationScreen_Preview() {
 @Preview
 fun ConfigurationScreen_PreviewDark() {
     MyApplicationTheme(true){
-        ConfigurationScreen(darkTheme = true, onBack = {})
+        ProfileScreen(
+            darkTheme = true,
+            navController = rememberNavController(),
+            onBack = {},
+            onEditProfile = {}
+        )
     }
 }

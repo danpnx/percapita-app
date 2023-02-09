@@ -20,23 +20,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import br.com.percapita.android.MyApplicationTheme
-import br.com.percapita.android.components.BottomBar
 import br.com.percapita.android.components.TopBar
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ProfileScreen(darkTheme: Boolean, navController: NavController, onBack: () -> Unit) {
+fun ConfigurationScreen(darkTheme: Boolean, onBack: () -> Unit, onSaveChanges: () -> Unit) {
     MyApplicationTheme(darkTheme) {
 
         Scaffold(modifier = Modifier.fillMaxSize(),
                 backgroundColor = MaterialTheme.colors.background,
                 contentColor = MaterialTheme.colors.onBackground,
                 topBar = {TopBar(title = "Editar Perfil", onBack)},
-                bottomBar = { BottomBar(navController) }) {
+                ) {
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -161,7 +158,7 @@ fun ProfileScreen(darkTheme: Boolean, navController: NavController, onBack: () -
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                Button(onClick = { /*TODO*/ },
+                Button(onClick = onSaveChanges,
                     modifier = Modifier.fillMaxWidth(0.8f),
                     colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
                 ){
@@ -175,11 +172,11 @@ fun ProfileScreen(darkTheme: Boolean, navController: NavController, onBack: () -
 @Composable
 @Preview
 fun ProfileScreen_Preview() {
-    ProfileScreen(darkTheme = false, navController = rememberNavController(), onBack = {})
+    ConfigurationScreen(darkTheme = false, onBack = {}, onSaveChanges = {})
 }
 
 @Composable
 @Preview
 fun ProfileScreen_PreviewDark() {
-    ProfileScreen(darkTheme = true, navController = rememberNavController(), onBack = {})
+    ConfigurationScreen(darkTheme = true, onBack = {}, onSaveChanges = {})
 }

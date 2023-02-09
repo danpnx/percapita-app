@@ -1,5 +1,6 @@
 package br.com.percapita.android.screens.login.forgot_password
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -10,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -20,7 +22,7 @@ import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.R
 
 @Composable
-fun ForgotPasswordScreen() {
+fun ForgotPasswordScreen(onLoginScreen: () -> Unit) {
     MyApplicationTheme() {
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(
@@ -36,6 +38,7 @@ fun ForgotPasswordScreen() {
                 modifier = Modifier.padding(16.dp)
             ) {
                 val email = remember { mutableStateOf(TextFieldValue()) }
+                val context = LocalContext.current
                 
                 Text(text = "Esqueceu sua senha?", fontSize = 25.sp, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(10.dp))
@@ -43,13 +46,15 @@ fun ForgotPasswordScreen() {
                 Text(text = "da sua conta", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
                 Spacer(modifier = Modifier.height(40.dp))
                 OutlinedTextField(value = email.value, onValueChange = {email.value = it},
-                label = { Text(text = "E-mail")},
-                modifier = Modifier.fillMaxWidth(0.9f))
+                    singleLine = true,
+                    label = { Text(text = "E-mail")},
+                    modifier = Modifier.fillMaxWidth(0.9f))
 
                 Spacer(modifier = Modifier.height(30.dp))
 
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { onLoginScreen.invoke()
+                              Toast.makeText(context, "E-mail enviado com sucesso", Toast.LENGTH_SHORT).show()},
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF04C457)),
                     modifier = Modifier.fillMaxWidth(0.8f)
                 ) {
@@ -63,5 +68,5 @@ fun ForgotPasswordScreen() {
 @Composable
 @Preview
 fun ForgotPasswordScreen_Preview() {
-    ForgotPasswordScreen()
+    ForgotPasswordScreen({})
 }
