@@ -1,23 +1,14 @@
 package br.com.percapita.android.components
 
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.PieChart
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import br.com.percapita.android.MyApplicationTheme
+import br.com.percapita.android.util.Lists.bottomNavList
 
 /**
  * @project PerCapita
@@ -25,30 +16,21 @@ import br.com.percapita.android.MyApplicationTheme
  **/
 
 @Composable
-fun BottomBar() {
-    BottomAppBar(
-        contentPadding = PaddingValues(horizontal = 20.dp),
-        containerColor = MaterialTheme.colors.background,
-        contentColor = MaterialTheme.colors.onBackground,
-        modifier = Modifier.height(50.dp)
+fun BottomBar(navController: NavController) {
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry?.destination?.route
+
+    NavigationBar(
+        containerColor = MaterialTheme.colors.surface
     ) {
-        IconButton(onClick = {  }) {
-            Icon(Icons.Filled.Home, "Página Inicial", modifier = Modifier.size(30.dp))
-        }
-        Spacer(modifier = Modifier.weight(1f))
-        IconButton(onClick = {  }) {
-            Icon(
-                Icons.Filled.History,
-                "Histórico de Transações", modifier = Modifier.size(30.dp)
+
+        bottomNavList.forEachIndexed { index, item ->
+            NavigationBarItem(
+                selected = (currentRoute == item.route.name),
+                onClick = { navController.navigate(item.route.name) },
+                icon = { Icon(imageVector = item.icon, contentDescription = item.description) },
+                label = { Text(text = item.name, color = MaterialTheme.colors.onSurface) }
             )
-        }
-        Spacer(modifier = Modifier.weight(1f))
-        IconButton(onClick = {  }) {
-            Icon(Icons.Filled.PieChart, "Relatórios", modifier = Modifier.size(30.dp))
-        }
-        Spacer(modifier = Modifier.weight(1f))
-        IconButton(onClick = {  }) {
-            Icon(Icons.Filled.Person, "Perfil", modifier = Modifier.size(30.dp))
         }
     }
 }
@@ -57,7 +39,7 @@ fun BottomBar() {
 @Composable
 fun BottomBarPreview() {
     MyApplicationTheme(false) {
-        BottomBar()
+        BottomBar(rememberNavController())
     }
 }
 
@@ -65,6 +47,6 @@ fun BottomBarPreview() {
 @Composable
 fun BottomBarPreviewDark() {
     MyApplicationTheme(darkTheme = true) {
-        BottomBar()
+        BottomBar(rememberNavController())
     }
 }

@@ -9,18 +9,15 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.components.BottomBar
+import br.com.percapita.android.components.TopBar
 import br.com.percapita.android.components.TransactionCard
 import br.com.percapita.android.util.Lists.transactionList
 
@@ -31,12 +28,17 @@ import br.com.percapita.android.util.Lists.transactionList
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HistoryScreen(isSystemDarkTheme: Boolean) {
+fun HistoryScreen(
+    isSystemDarkTheme: Boolean,
+    navController: NavController,
+    onBack: () -> Unit,
+    onClickRegisterTransaction: () -> Unit
+) {
     MyApplicationTheme(darkTheme = isSystemDarkTheme) {
         Scaffold(
-            bottomBar = { BottomBar() },
-            topBar = { HistoryTopBar(title = "Histórico") },
-            floatingActionButton = { AddTransactionFAB() }
+            bottomBar = { BottomBar(navController) },
+            topBar = { TopBar(title = "Histórico", onBack = onBack) },
+            floatingActionButton = { AddTransactionFAB(onClickRegisterTransaction) }
         ) {
             LazyColumn(modifier = Modifier.padding(it)) {
                 items(transactionList) { transaction ->
@@ -48,38 +50,9 @@ fun HistoryScreen(isSystemDarkTheme: Boolean) {
 }
 
 @Composable
-fun HistoryTopBar(title: String) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .paddingFromBaseline(bottom = 50.dp)
-            .padding(top = 1.5.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IconButton(onClick = {}) {
-            Icon(
-                imageVector = Icons.Filled.ArrowBackIosNew,
-                contentDescription = "Voltar",
-                tint = MaterialTheme.colors.onBackground,
-                modifier = Modifier.padding(start = 10.dp)
-            )
-        }
-        Spacer(modifier = Modifier.weight(1f))
-        Text(
-            text = title,
-            color = MaterialTheme.colors.onBackground,
-            fontSize = 25.sp,
-            fontStyle = FontStyle.Normal,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.weight(2.5f)
-        )
-    }
-}
-
-@Composable
-fun AddTransactionFAB() {
+fun AddTransactionFAB(onClickRegisterTransaction: () -> Unit) {
     FloatingActionButton(
-        onClick = {},
+        onClick = onClickRegisterTransaction,
         shape = CircleShape,
         backgroundColor = MaterialTheme.colors.primary,
         contentColor = MaterialTheme.colors.onPrimary,
@@ -96,21 +69,31 @@ fun AddTransactionFAB() {
 @Preview(name = "History Screen Preview - Light")
 @Composable
 fun HistoryScreenPreview() {
-    HistoryScreen(false)
+    HistoryScreen(
+        isSystemDarkTheme = false,
+        navController = rememberNavController(),
+        onBack = {},
+        onClickRegisterTransaction = {}
+    )
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(name = "History Screen Preview - Dark")
 @Composable
 fun HistoryScreenPreviewDark() {
-    HistoryScreen(true)
+    HistoryScreen(
+        isSystemDarkTheme = true,
+        navController = rememberNavController(),
+        onBack = {},
+        onClickRegisterTransaction = {}
+    )
 }
 
 @Preview(name = "Add Transaction FAB Preview - Light", showBackground = true)
 @Composable
 fun AddTransactionFABPreview() {
     MyApplicationTheme(darkTheme = false) {
-        AddTransactionFAB()
+        AddTransactionFAB(onClickRegisterTransaction = {})
     }
 }
 
@@ -118,6 +101,6 @@ fun AddTransactionFABPreview() {
 @Composable
 fun AddTransactionFABDark() {
     MyApplicationTheme(darkTheme = true) {
-        AddTransactionFAB()
+        AddTransactionFAB(onClickRegisterTransaction = {})
     }
 }

@@ -1,5 +1,6 @@
 package br.com.percapita.android.screens.login
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -14,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -28,7 +30,12 @@ import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.R
 
 @Composable
-fun LoginScreen(isSystemDarkTheme: Boolean, onHomeNavigation: () -> Unit) {
+fun LoginScreen(
+    isSystemDarkTheme: Boolean,
+    onHomeNavigation: () -> Unit,
+    onSignUpNavigation: () -> Unit,
+    onForgotPasswordNavigation: () -> Unit
+) {
     MyApplicationTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(
@@ -36,8 +43,14 @@ fun LoginScreen(isSystemDarkTheme: Boolean, onHomeNavigation: () -> Unit) {
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier.padding(16.dp)
             ) {
+                val login = remember { mutableStateOf(TextFieldValue()) }
+                val password = remember { mutableStateOf(TextFieldValue()) }
+                val passwordVisible = remember { mutableStateOf(false) }
+                val context = LocalContext.current
+
                 Image(painter = painterResource(id = R.drawable.percapita), contentDescription = "Logotipo",
-                    contentScale = ContentScale.Fit, modifier = Modifier.size(200.dp))
+                    contentScale = ContentScale.Fit)
+                Spacer(modifier = Modifier.height(50.dp))
                 Text(
                     text = "Bem vindo",
                     fontWeight = FontWeight.Bold,
@@ -47,64 +60,55 @@ fun LoginScreen(isSystemDarkTheme: Boolean, onHomeNavigation: () -> Unit) {
                 Text(
                     text = "Realize seu login ou crie uma conta com a gente!",
                     fontWeight = FontWeight.Light, color = Color.Black, fontSize = 15.sp)
-                Spacer(modifier = Modifier.height(400.dp))
-            }
-        }
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(16.dp)) {
-            val login = remember { mutableStateOf(TextFieldValue()) }
-            val password = remember { mutableStateOf(TextFieldValue()) }
-            val passwordVisible = remember { mutableStateOf(false) }
+                Spacer(modifier = Modifier.height(50.dp))
+                OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = login.value,
+                    onValueChange = { login.value = it }, label = { Text(text = "E-mail")})
 
-            Spacer(modifier = Modifier.height(350.dp))
-            OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = login.value,
-                onValueChange = { login.value = it }, label = { Text(text = "E-mail")})
+                Spacer(modifier = Modifier.height(16.dp))
 
-            OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = password.value,
-                onValueChange = { password.value = it }, label = { Text(text = "Senha") },
-                visualTransformation = if(passwordVisible.value.not()) PasswordVisualTransformation() else VisualTransformation.None,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                trailingIcon = {
-                    val icone = if(passwordVisible.value.not()) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
-                    val description = if(passwordVisible.value.not()) "Invisivel" else "Visivel"
-                    IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
-                        Icon(imageVector = icone , contentDescription = description)
+                OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = password.value,
+                    onValueChange = { password.value = it }, label = { Text(text = "Senha") },
+                    visualTransformation = if(passwordVisible.value.not()) PasswordVisualTransformation() else VisualTransformation.None,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    trailingIcon = {
+                        val icone = if(passwordVisible.value.not()) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
+                        val description = if(passwordVisible.value.not()) "Invisivel" else "Visivel"
+                        IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
+                            Icon(imageVector = icone , contentDescription = description)
+                        }
+                    } )
+
+                TextButton(onClick = { onForgotPasswordNavigation.invoke() }) {
+                    Text(text = "Esqueci minha senha", modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.End, color = Color.Black)
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+                Button(onClick = {
+                    if (login.value.text == "1") {
+                        onHomeNavigation.invoke()
+                    } else {
+                        Toast.makeText(context, "Usuário ou senha inválido", Toast.LENGTH_SHORT).show()
                     }
-                } )
+                },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF04C457))) {
+                    Text(text = "Entrar", fontSize = 16.sp)
+                }
 
-            TextButton(onClick = { }) {
-                Text(text = "Esqueci minha senha", modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.End, color = Color.Black)
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = { onHomeNavigation.invoke() },
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF04C457))) {
-                Text(text = "Entrar", fontSize = 16.sp)
-            }
-
-            Spacer(modifier = Modifier.height(20.dp))
-            TextButton(onClick = { /*TODO*/ }) {
-                Text(text = "Criar conta", modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center, fontSize = 16.sp, color = Color.Black)
+                Spacer(modifier = Modifier.height(20.dp))
+                TextButton(onClick = { onSignUpNavigation.invoke() }) {
+                    Text(text = "Criar conta", modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center, fontSize = 16.sp, color = Color.Black)
+                }
             }
         }
     }
 }
 
-
 @Composable
 @Preview
 fun LoginScreen_Preview() {
-    LoginScreen(true) {}
-}
-
-@Composable
-@Preview
-fun LoginScreen_PreviewDark() {
-    LoginScreen(false) {}
+    LoginScreen(isSystemDarkTheme = false, {}, {}) {}
 }

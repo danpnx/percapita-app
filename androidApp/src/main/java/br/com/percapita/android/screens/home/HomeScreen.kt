@@ -11,21 +11,16 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.components.BottomBar
 import br.com.percapita.android.components.TransactionCard
 import br.com.percapita.android.util.Lists.transactionList
 
 @Composable
-fun HomeScreen(isSystemDarkTheme: Boolean) {
+fun HomeScreen(isSystemDarkTheme: Boolean, navController: NavController) {
     MyApplicationTheme(darkTheme = isSystemDarkTheme) {
         Scaffold(
-            bottomBar = { BottomBar() },
+            bottomBar = { BottomBar(navController) },
             scaffoldState = rememberScaffoldState()
         )
         {

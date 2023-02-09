@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import br.com.percapita.android.MyApplicationTheme
 
 @Composable
-fun ButtonDarkMode(darkTheme: Boolean){
+fun ButtonDarkMode(){
     Column(verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.End,
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 25.dp)){
@@ -40,8 +40,8 @@ fun ButtonDarkMode(darkTheme: Boolean){
 @Preview
 @Composable
 fun ButtonDarkModePreview() {
-    MyApplicationTheme {
-        ButtonDarkMode(false)
+    MyApplicationTheme(darkTheme = false) {
+        ButtonDarkMode()
     }
 }
 
@@ -49,6 +49,6 @@ fun ButtonDarkModePreview() {
 @Composable
 fun ButtonDarkModePreviewDark() {
     MyApplicationTheme(darkTheme = true) {
-        ButtonDarkMode(true)
+        ButtonDarkMode()
     }
 }
