@@ -1,34 +1,38 @@
-package br.com.percapita.android.screens.configuration
+package br.com.percapita.android.screens.profile
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Brightness4
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.components.*
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ConfigurationScreen(darkTheme: Boolean) {
+fun ProfileScreen(
+    darkTheme: Boolean,
+    navController: NavController,
+    onBack: () -> Unit,
+    onEditProfile: () -> Unit
+) {
     MyApplicationTheme(darkTheme) {
 
         Scaffold(modifier = Modifier.fillMaxSize(),
             backgroundColor = MaterialTheme.colors.background,
             contentColor = MaterialTheme.colors.onBackground,
-            topBar = { TopBar(title = "Editar Perfil") },
-            bottomBar = { BottomBar() })  {
+            topBar = { TopBar(title = "Editar Perfil", onBack) },
+            bottomBar = { BottomBar(navController) }
+        ) {
 
-            ButtonDarkMode(darkTheme = darkTheme)
+            ButtonDarkMode()
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -57,7 +61,7 @@ fun ConfigurationScreen(darkTheme: Boolean) {
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                Button(onClick = { /*TODO*/ },
+                Button(onClick = onEditProfile,
                     modifier = Modifier.fillMaxWidth(0.8f),
                     colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary))
                 {
@@ -85,7 +89,12 @@ fun ConfigurationScreen(darkTheme: Boolean) {
 @Preview
 fun ConfigurationScreen_Preview() {
     MyApplicationTheme(false){
-        ConfigurationScreen(false)
+        ProfileScreen(
+            darkTheme = false,
+            navController = rememberNavController(),
+            onBack = {},
+            onEditProfile = {}
+        )
     }
 }
 
@@ -93,6 +102,11 @@ fun ConfigurationScreen_Preview() {
 @Preview
 fun ConfigurationScreen_PreviewDark() {
     MyApplicationTheme(true){
-        ConfigurationScreen(true)
+        ProfileScreen(
+            darkTheme = true,
+            navController = rememberNavController(),
+            onBack = {},
+            onEditProfile = {}
+        )
     }
 }

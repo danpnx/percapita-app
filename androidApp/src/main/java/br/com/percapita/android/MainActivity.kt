@@ -52,7 +52,7 @@ fun MyApplicationTheme(
             background = Color(0xFFfcfdf7),
             onBackground = Color(0xFF1a1c19),
             surface = Color(0xFFfcfdf7),
-            onSurface = Color(0xFFBBC9B3)
+            onSurface = Color(0xFF1a1c19)
         )
     }
     val typography = Typography(

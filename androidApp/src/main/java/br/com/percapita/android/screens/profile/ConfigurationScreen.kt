@@ -12,7 +12,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
@@ -22,22 +21,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.percapita.android.MyApplicationTheme
-import br.com.percapita.android.components.BottomBar
-import br.com.percapita.android.components.ButtonDarkModePreview
-import br.com.percapita.android.components.ButtonDarkModePreviewDark
 import br.com.percapita.android.components.TopBar
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ProfileScreen(darkTheme: Boolean) {
+fun ConfigurationScreen(darkTheme: Boolean, onBack: () -> Unit, onSaveChanges: () -> Unit) {
     MyApplicationTheme(darkTheme) {
 
         Scaffold(modifier = Modifier.fillMaxSize(),
                 backgroundColor = MaterialTheme.colors.background,
                 contentColor = MaterialTheme.colors.onBackground,
-                topBar = {TopBar(title = "Editar Perfil")},
-                bottomBar = { BottomBar() }) {
+                topBar = {TopBar(title = "Editar Perfil", onBack)},
+                ) {
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -162,7 +158,7 @@ fun ProfileScreen(darkTheme: Boolean) {
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                Button(onClick = { /*TODO*/ },
+                Button(onClick = onSaveChanges,
                     modifier = Modifier.fillMaxWidth(0.8f),
                     colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
                 ){
@@ -176,11 +172,11 @@ fun ProfileScreen(darkTheme: Boolean) {
 @Composable
 @Preview
 fun ProfileScreen_Preview() {
-    ProfileScreen(false)
+    ConfigurationScreen(darkTheme = false, onBack = {}, onSaveChanges = {})
 }
 
 @Composable
 @Preview
 fun ProfileScreen_PreviewDark() {
-    ProfileScreen(true)
+    ConfigurationScreen(darkTheme = true, onBack = {}, onSaveChanges = {})
 }

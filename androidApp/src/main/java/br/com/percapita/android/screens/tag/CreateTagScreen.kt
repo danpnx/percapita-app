@@ -22,8 +22,7 @@ import br.com.percapita.android.components.TopBar
 fun CreateTagScreen(isSystemDarkTheme: Boolean, onBack: () -> Unit) {
     MyApplicationTheme(darkTheme = isSystemDarkTheme) {
         Scaffold(
-            topBar = {
-                TopBar(title = "Criar Tag", darkTheme = isSystemDarkTheme, onBack = { onBack }) }
+            topBar = { TopBar(title = "Criar Tag", onBack = onBack) }
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -33,7 +32,10 @@ fun CreateTagScreen(isSystemDarkTheme: Boolean, onBack: () -> Unit) {
                 Spacer(modifier = Modifier.height(300.dp))
                 val tagName = remember { mutableStateOf(TextFieldValue()) }
                 
-                OutlinedTextField(value = tagName.value, onValueChange = {tagName.value = it},
+                Spacer(modifier = Modifier.height(180.dp))
+                OutlinedTextField(value = tagName.value, onValueChange = { str ->
+                    tagName.value = str
+                },
                     label = {Text(text = "Digite o nome da Tag")},
                     modifier = Modifier
                         .fillMaxWidth()
@@ -41,8 +43,7 @@ fun CreateTagScreen(isSystemDarkTheme: Boolean, onBack: () -> Unit) {
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
                 )
-                Spacer(modifier = Modifier.height(180.dp))
-                
+
                 Button(onClick = {  },
                 modifier = Modifier.padding(16.dp)) {
                     Text(text = "Criar Tag")
