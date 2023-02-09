@@ -1,5 +1,8 @@
 package br.com.percapita.android.screens.home
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -15,7 +18,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.components.BottomBar
+import br.com.percapita.android.components.TransactionCard
+import br.com.percapita.android.util.Lists.transactionList
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(isSystemDarkTheme: Boolean) {
     MyApplicationTheme(darkTheme = isSystemDarkTheme) {
@@ -23,22 +29,34 @@ fun HomeScreen(isSystemDarkTheme: Boolean) {
             bottomBar = { BottomBar() },
             scaffoldState = rememberScaffoldState()
         ) {
-            LazyColumn(modifier = Modifier.padding(it).padding(horizontal = 10.dp)) {
+            LazyColumn(
+                modifier = Modifier
+                    .padding(it)
+                    .padding(horizontal = 10.dp)
+            ) {
                 item {
                     Card(
                         shape = CardDefaults.elevatedShape,
                         elevation = CardDefaults.cardElevation(1.dp),
-                        modifier = Modifier.padding(top = 150.dp).height(100.dp).fillMaxWidth()
+                        modifier = Modifier
+                            .padding(top = 150.dp)
+                            .height(100.dp)
+                            .fillMaxWidth()
                     ) {
                         Text(
                             text = "Receitas",
                             Modifier.padding(start = 10.dp, top = 5.dp)
+
                         )
                     }
                     Card(
                         shape = CardDefaults.elevatedShape,
                         elevation = CardDefaults.cardElevation(1.dp),
-                        modifier = Modifier.padding(top = 20.dp).height(100.dp).fillMaxWidth()
+                        modifier = Modifier
+                            .padding(top = 20.dp)
+                            .height(100.dp)
+                            .fillMaxWidth(),
+                        //    colors = CardDefaults.cardColors(Green)
                     ) {
                         Text(
                             text = "Despesas",
@@ -48,25 +66,27 @@ fun HomeScreen(isSystemDarkTheme: Boolean) {
                     Card(
                         shape = CardDefaults.elevatedShape,
                         elevation = CardDefaults.cardElevation(1.dp),
-                        modifier = Modifier.padding(top = 20.dp).height(100.dp).fillMaxWidth()
+                        modifier = Modifier
+                            .padding(top = 20.dp)
+                            .height(100.dp)
+                            .fillMaxWidth()
                     ) {
                         Text(
                             text = "Últimos Registros",
                             Modifier.padding(start = 10.dp, top = 5.dp)
                         )
+                        }
                     }
-
                 }
             }
         }
     }
-}
 
 
-@Composable
-@Preview
-fun HomeScreen_Preview() {
-    HomeScreen(false)
-}
+    @Composable
+    @Preview
+    fun HomeScreen_Preview() {
+        HomeScreen(false)
+    }
 
 
