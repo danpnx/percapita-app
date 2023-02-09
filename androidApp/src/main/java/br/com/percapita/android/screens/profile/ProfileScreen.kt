@@ -1,11 +1,21 @@
 package br.com.percapita.android.screens.profile
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.filled.Brightness4
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -14,6 +24,49 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.components.*
+
+@Composable
+fun ProfileTopBar(title: String, darkTheme: Boolean, onBack: () -> Unit) {
+    MyApplicationTheme(darkTheme) {
+        var isSystemDarkTheme = remember { mutableStateOf(darkTheme) }
+        val onChangeTheme = {
+            isSystemDarkTheme.value = !isSystemDarkTheme.value
+        }
+        TopAppBar(
+            title = {
+                Text(
+                    text = title,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier,
+                    color = MaterialTheme.colors.onBackground
+                )
+            },
+            navigationIcon = {
+                IconButton(onClick = { onBack }) {
+                    Icon(imageVector = Icons.Filled.ArrowBackIosNew, contentDescription = "Voltar")
+                }
+            },
+            actions ={
+                Button(onClick = { onChangeTheme },
+                    shape = CircleShape,
+                    modifier = Modifier.padding(10.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.surface)) {
+                    Icon(
+                        Icons.Default.Brightness4,
+                        contentDescription = "Dark Mode",
+                        modifier = Modifier
+                            .height(16.dp)
+                            .padding(0.dp),
+                        tint = MaterialTheme.colors.onBackground)
+                }
+            },
+            backgroundColor = MaterialTheme.colors.background,
+            modifier = Modifier.height(80.dp)
+        )
+    }
+}
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -28,40 +81,50 @@ fun ProfileScreen(
         Scaffold(modifier = Modifier.fillMaxSize(),
             backgroundColor = MaterialTheme.colors.background,
             contentColor = MaterialTheme.colors.onBackground,
-            topBar = { TopBar(title = "Editar Perfil", onBack) },
-            bottomBar = { BottomBar(navController) }
-        ) {
-
-            ButtonDarkMode()
+            topBar = { ProfileTopBar(title = "Perfil", darkTheme, onBack) },
+            bottomBar = { BottomBar(navController) })  {
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(16.dp, vertical = 100.dp)) {
+                modifier = Modifier
+                    .padding(16.dp, vertical = 40.dp)
+                    .fillMaxSize()) {
+                val userName = remember { mutableStateOf(TextFieldValue()) }
+                val userEmail = remember { mutableStateOf(TextFieldValue()) }
 
                 Text(
                     text = "Nome Completo:",
-                    textAlign = TextAlign.Left,
+                    textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(0.9f))
-                Text(
-                    text = "Nome completo",
-                    textAlign = TextAlign.Left,
-                    modifier = Modifier.fillMaxWidth(0.9f))
+                TextField(
+                    readOnly = true,
+                    value = userName.value,
+                    onValueChange = { userName.value = it },
+                    modifier = Modifier.fillMaxWidth(0.9f),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        unfocusedBorderColor = MaterialTheme.colors.onBackground
+                    )
+                )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
                     text = "E-mail:",
-                    textAlign = TextAlign.Left,
+                    textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(0.9f))
-                Text(
-                    text = "email@email.com",
-                    textAlign = TextAlign.Left,
-                    modifier = Modifier.fillMaxWidth(0.9f))
-
+                TextField(
+                    readOnly = true,
+                    value = userEmail.value,
+                    onValueChange = { userEmail.value = it },
+                    modifier = Modifier.fillMaxWidth(0.9f),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        unfocusedBorderColor = MaterialTheme.colors.onBackground
+                    )
+                )
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                Button(onClick = onEditProfile,
+                Button(onClick = { onEditProfile },
                     modifier = Modifier.fillMaxWidth(0.8f),
                     colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary))
                 {
@@ -69,8 +132,11 @@ fun ProfileScreen(
                 }
             }
 
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Spacer(modifier = Modifier.weight(1f))
+            Column(horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Bottom,
+                modifier = Modifier
+                    .padding(16.dp, vertical = 90.dp)
+                    .fillMaxSize()){
 
                 Button(onClick = { /*TODO*/ },
                     modifier = Modifier.fillMaxWidth(0.8f),
@@ -78,7 +144,6 @@ fun ProfileScreen(
                 ){
                     Text(text = "Sair", fontSize = 16.sp)
                 }
-
             }
 
         }
@@ -87,7 +152,7 @@ fun ProfileScreen(
 
 @Composable
 @Preview
-fun ConfigurationScreen_Preview() {
+fun ProfileScreen_Preview() {
     MyApplicationTheme(false){
         ProfileScreen(
             darkTheme = false,
@@ -100,7 +165,7 @@ fun ConfigurationScreen_Preview() {
 
 @Composable
 @Preview
-fun ConfigurationScreen_PreviewDark() {
+fun ProfileScreen_PreviewDark() {
     MyApplicationTheme(true){
         ProfileScreen(
             darkTheme = true,
