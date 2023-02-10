@@ -20,6 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.components.BottomBar
 import br.com.percapita.android.components.TransactionCard
+import br.com.percapita.android.screens.profile.ProfileScreen
 import br.com.percapita.android.util.Lists.transactionList
 import java.nio.file.WatchEvent
 
@@ -85,7 +86,7 @@ fun HomeScreen(isSystemDarkTheme: Boolean, navController: NavController) {
                         Text(
                             text = "Despesas",
                             Modifier.padding(start = 10.dp, top = 5.dp),
-                            fontWeight = FontWeight . Bold,
+                            fontWeight = FontWeight.Bold,
                             fontSize = 20.sp
                         )
                         Divider(
@@ -120,7 +121,19 @@ fun HomeScreen(isSystemDarkTheme: Boolean, navController: NavController) {
 @Composable
 @Preview
 fun HomeScreen_Preview() {
-    HomeScreen(false, navController = rememberNavController())
+    HomeScreen(
+        false,
+        navController = rememberNavController()
+    )
+}
+
+@Composable
+@Preview
+fun HomeScreen_PreviewDark() {
+    HomeScreen(
+        true,
+        navController = rememberNavController()
+    )
 }
 
 
