@@ -51,4 +51,5 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.0")
     implementation("androidx.compose.ui:ui-util:1.3.3")
     implementation("com.github.tehras:charts:0.2.4-alpha")
+
 }
