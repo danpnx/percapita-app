@@ -19,6 +19,7 @@ kotlin {
 
     sourceSets {
         val ktorVersion = "2.2.2"
+        val coroutinesVersion = "1.6.4"
 
         val commonMain by getting {
             dependencies {
@@ -26,6 +27,8 @@ kotlin {
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+                
             }
         }
         val commonTest by getting {

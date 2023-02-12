@@ -3,7 +3,8 @@ package br.com.percapita.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Tag(
-    val tagId: String,
-    val tagName: String
+data class User(
+    val username: String,
+    val password: String,
+    val name: String
 )
