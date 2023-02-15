@@ -2,18 +2,24 @@ package br.com.percapita.android.screens.report
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.components.BottomBar
 import br.com.percapita.android.components.TopBar
+import br.com.percapita.android.screens.register_transaction.RegisterTransactionScreen
 import br.com.percapita.android.util.Lists.chartList
 import com.github.tehras.charts.piechart.PieChart
 import com.github.tehras.charts.piechart.PieChartData
@@ -50,11 +56,64 @@ fun ReportScreen(
                         animation = simpleChartAnimation(),
                         sliceDrawer = SimpleSliceDrawer()
                     )
-                    
-                    Text(text = "OLÁ")
+
+                }
+            }
+
+
+            /**val transactions = MutableList(3) {
+                RegisterTransactionScreen(
+                    )**/
+
+            val slices = listOf(
+                PieChartData.Slice(10f, Color.Red),
+                PieChartData.Slice(30f, Color.Blue),
+                PieChartData.Slice(40f, Color.Magenta),
+                PieChartData.Slice(20f, Color.Green)
+            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                PieChart(
+                    pieChartData = PieChartData(slices),
+                    modifier = Modifier
+                        .height(150.dp)
+                        .weight(0.5f)
+                        .wrapContentWidth(),
+                    sliceDrawer = SimpleSliceDrawer(
+                        sliceThickness =
+                        100f
+                    )
+                )
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    slices.forEach {
+                        LabelItem(color = it.color, name = "Abc (${it.value.toInt()}%)")
+                    }
                 }
             }
         }
+    }
+}
+
+
+
+@Composable
+fun LabelItem(color: Color, name: String, nameColor: Color = Color.Black) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    )
+    {
+        Icon(
+            Icons.Filled.Circle,
+            contentDescription = name,
+            modifier = Modifier.height(10.dp),
+            tint = color
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(text = name, color = nameColor)
     }
 }
 
