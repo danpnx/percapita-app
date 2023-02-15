@@ -52,4 +52,5 @@ dependencies {
     implementation("androidx.compose.ui:ui-util:1.3.3")
     implementation("com.github.tehras:charts:0.2.4-alpha")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
+
 }
