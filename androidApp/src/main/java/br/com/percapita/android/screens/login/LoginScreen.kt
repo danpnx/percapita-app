@@ -8,9 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,8 +24,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.R
+import br.com.percapita.utils.DataResult
 
 @Composable
 fun LoginScreen(
@@ -43,10 +43,14 @@ fun LoginScreen(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier.padding(16.dp)
             ) {
-                val login = remember { mutableStateOf(TextFieldValue()) }
+                val username = remember { mutableStateOf(TextFieldValue()) }
                 val password = remember { mutableStateOf(TextFieldValue()) }
                 val passwordVisible = remember { mutableStateOf(false) }
                 val context = LocalContext.current
+
+                val viewModel = viewModel<LoginViewModel>()
+                val loginState by viewModel.loginState.collectAsState()
+                val navigateToHome = remember { mutableStateOf(false) }
 
                 Image(painter = painterResource(id = R.drawable.percapita), contentDescription = "Logotipo",
                     contentScale = ContentScale.Fit)
@@ -56,17 +60,17 @@ fun LoginScreen(
                     fontWeight = FontWeight.Bold,
                     color = Color.Black,
                     fontSize = 26.sp)
+
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     text = "Realize seu login ou crie uma conta com a gente!",
                     fontWeight = FontWeight.Light, color = Color.Black, fontSize = 15.sp)
 
                 Spacer(modifier = Modifier.height(50.dp))
-                OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = login.value,
-                    onValueChange = { login.value = it }, label = { Text(text = "E-mail")})
+                OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = username.value,
+                    onValueChange = { username.value = it }, label = { Text(text = "E-mail")})
 
                 Spacer(modifier = Modifier.height(16.dp))
-
                 OutlinedTextField(modifier = Modifier.fillMaxWidth(), value = password.value,
                     onValueChange = { password.value = it }, label = { Text(text = "Senha") },
                     visualTransformation = if(passwordVisible.value.not()) PasswordVisualTransformation() else VisualTransformation.None,
@@ -85,15 +89,22 @@ fun LoginScreen(
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = {
-                    if (login.value.text == "1") {
-                        onHomeNavigation.invoke()
-                    } else {
-                        Toast.makeText(context, "Usuário ou senha inválido", Toast.LENGTH_SHORT).show()
-                    }
-                },
+                Button(
+                    onClick = {
+                        viewModel.login(username.value.text, password.value.text)
+
+                        if (loginState is DataResult.Error) {
+                            Toast.makeText(context, "Usuário e/ou senha inválido", Toast.LENGTH_SHORT).show()
+                        }
+
+                        if (loginState is DataResult.Success && !navigateToHome.value) {
+                            onHomeNavigation.invoke()
+                            navigateToHome.value = true
+                        }
+                    },
                     modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF04C457))) {
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF04C457))
+                ) {
                     Text(text = "Entrar", fontSize = 16.sp)
                 }
 
