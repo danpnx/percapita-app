@@ -122,40 +122,33 @@ fun SignUpScreen(onLoginNavigation: () -> Unit) {
 
                 Spacer(modifier = Modifier.height(30.dp))
 
-                if (signUpState is DataResult.Loading) {
-                    CircularProgressIndicator()
-                } else {
-                    if (signUpState is DataResult.Success && !navigateToHome.value) {
-                        onLoginNavigation.invoke()
-                        navigateToHome.value = true
-                    }
-                    if (signUpState is DataResult.Error && !navigateToHome.value) {
-                        onLoginNavigation.invoke()
-                        navigateToHome.value = true
-                        Toast.makeText(
-                            context,
-                            "Por favor, insira os dados corretamente",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Button(
-                            onClick = {
-                                viewModel.signUp(
-                                    name = name.value.text,
-                                    username = username.value.text,
-                                    password = password.value.text
-                                )
-                            },
-                            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF04C457)),
-                            modifier = Modifier.fillMaxWidth(0.8f)
-                        ) {
-                            Text(text = "Criar conta")
+                Toast.makeText(context, "Por favor, insira os dados corretamente", Toast.LENGTH_SHORT).show()
+                Button(
+                    onClick = {
+                        viewModel.signUp(
+                            name = name.value.text,
+                            username = username.value.text,
+                            password = password.value.text)
+
+                        if (signUpState is DataResult.Success && !navigateToHome.value) {
+                            onLoginNavigation.invoke()
+                            navigateToHome.value = true
                         }
-                    }
+                        if (signUpState is DataResult.Error && !navigateToHome.value) {
+                            onLoginNavigation.invoke()
+                            navigateToHome.value = true
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF04C457)),
+                    modifier = Modifier.fillMaxWidth(0.8f)
+                ) {
+                    Text(text = "Criar conta")
                 }
             }
         }
     }
 }
+
 
 @Composable
 @Preview
