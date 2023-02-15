@@ -122,7 +122,6 @@ fun SignUpScreen(onLoginNavigation: () -> Unit) {
 
                 Spacer(modifier = Modifier.height(30.dp))
 
-                Toast.makeText(context, "Por favor, insira os dados corretamente", Toast.LENGTH_SHORT).show()
                 Button(
                     onClick = {
                         viewModel.signUp(
@@ -137,6 +136,7 @@ fun SignUpScreen(onLoginNavigation: () -> Unit) {
                         if (signUpState is DataResult.Error && !navigateToHome.value) {
                             onLoginNavigation.invoke()
                             navigateToHome.value = true
+                            Toast.makeText(context, "Por favor, insira os dados corretamente", Toast.LENGTH_SHORT).show()
                         }
                     },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF04C457)),
