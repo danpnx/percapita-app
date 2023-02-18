@@ -7,8 +7,10 @@ data class User(
     val username: String,
     val password: String,
     val name: String
-)
+) {
+}
 
 @Serializable
-class ProfileToken(val token: String) {
-}
+data class ProfileToken(
+    val token: String
+)

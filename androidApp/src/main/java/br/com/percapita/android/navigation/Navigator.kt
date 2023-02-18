@@ -81,7 +81,9 @@ fun Navigator(
         }
 
         composable(Route.CREATE_TAG_SCREEN.name) {
-            CreateTagScreen(isSystemDarkTheme = isSystemDarkTheme, onBack = { navHostController.popBackStack() })
+            CreateTagScreen(isSystemDarkTheme = isSystemDarkTheme,
+                onBack = { navHostController.popBackStack() },
+                onTagScreenNavigation = { navHostController.navigate(Route.TAG_SCREEN.name)})
         }
 
         composable(Route.REPORT_SCREEN.name) {

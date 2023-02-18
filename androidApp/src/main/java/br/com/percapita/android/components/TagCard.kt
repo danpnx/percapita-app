@@ -22,7 +22,7 @@ import br.com.percapita.model.Tag
 
 @Composable
 fun TagCard(
-    tag: Tag
+    tagName: String
 ) {
     Card(
         modifier = Modifier
@@ -43,7 +43,7 @@ fun TagCard(
                 {
                     Column() {
                         Text(
-                            text = tag.tagName,
+                            text = tagName,
                             fontSize = 16.sp,
                             fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colors.onBackground
@@ -85,7 +85,7 @@ fun DropdownMenuTag() {
 @Preview
 fun TagCard_Preview() {
     MyApplicationTheme(darkTheme = false) {
-        TagCard(tag = Tag("1", "iFood"))
+        TagCard("Teste")
     }
 }
 
@@ -93,6 +93,6 @@ fun TagCard_Preview() {
 @Preview
 fun TagCardDark_Preview() {
     MyApplicationTheme(darkTheme = true) {
-        TagCard(tag = Tag("1", "iFood"))
+        TagCard("TesteB")
     }
 }

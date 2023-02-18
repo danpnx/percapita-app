@@ -102,6 +102,7 @@ fun SignUpScreen(onLoginNavigation: () -> Unit) {
                             Icon(imageVector = icone, contentDescription = description)
                         }
                     })
+
                 Spacer(modifier = Modifier.height(15.dp))
 
                 OutlinedTextField(value = confirmPassword.value,
@@ -120,23 +121,25 @@ fun SignUpScreen(onLoginNavigation: () -> Unit) {
                         }
                     })
 
+                if(confirmPassword.value.text != password.value.text) {
+                    Text(text = "As senhas não coincidem")
+                }
+
                 Spacer(modifier = Modifier.height(30.dp))
 
-                Toast.makeText(context, "Por favor, insira os dados corretamente", Toast.LENGTH_SHORT).show()
                 Button(
                     onClick = {
                         viewModel.signUp(
                             name = name.value.text,
                             username = username.value.text,
                             password = password.value.text)
-
                         if (signUpState is DataResult.Success && !navigateToHome.value) {
                             onLoginNavigation.invoke()
                             navigateToHome.value = true
+                            Toast.makeText(context, "Conta criada com sucesso!", Toast.LENGTH_SHORT).show()
                         }
-                        if (signUpState is DataResult.Error && !navigateToHome.value) {
-                            onLoginNavigation.invoke()
-                            navigateToHome.value = true
+                        if (signUpState is DataResult.Error) {
+                            Toast.makeText(context, "Por favor, insira os dados corretamente", Toast.LENGTH_SHORT).show()
                         }
                     },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF04C457)),
@@ -148,7 +151,6 @@ fun SignUpScreen(onLoginNavigation: () -> Unit) {
         }
     }
 }
-
 
 @Composable
 @Preview
