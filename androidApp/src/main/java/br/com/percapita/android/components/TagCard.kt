@@ -38,21 +38,21 @@ fun TagCard(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
                 .clickable { }
-            ) {
+        ) {
             Row(verticalAlignment = Alignment.CenterVertically)
-                {
-                    Column() {
-                        Text(
-                            text = tagName,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.colors.onBackground
-                        )
-                    }
-                    DropdownMenuTag()
+            {
+                Column {
+                    Text(
+                        text = tagName,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colors.onBackground
+                    )
                 }
+                DropdownMenuTag()
             }
         }
+    }
 }
 
 @Composable
