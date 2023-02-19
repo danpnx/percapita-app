@@ -3,7 +3,6 @@ package br.com.percapita.api
 import br.com.percapita.api.DefaultUrl.DEFAULT_URL
 import br.com.percapita.model.*
 import br.com.percapita.payload.FinancialTransactionPayload
-import br.com.percapita.payload.TagList
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.*
@@ -56,7 +55,7 @@ class PercapitaApi {
         return httpClient.get("$DEFAULT_URL/tag/{id}").body()
     }
 
-    suspend fun getAllTags(): TagList {
+    suspend fun getAllTags(): List<Tag> {
         return httpClient.get("$DEFAULT_URL/tag/all").body()
     }
 
