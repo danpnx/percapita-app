@@ -3,7 +3,6 @@ package br.com.percapita.repository
 import br.com.percapita.api.PercapitaApi
 import br.com.percapita.extension.updateState
 import br.com.percapita.model.Tag
-import br.com.percapita.payload.TagList
 import br.com.percapita.utils.DataResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -15,8 +14,9 @@ class TagRepository(
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
 
-    suspend fun getAllTags() = flow<DataResult<TagList>> {
-        emit(DataResult.Success(api.getAllTags()))
+    suspend fun getAllTags() = flow {
+        val dataApi = api.getAllTags()
+        emit(DataResult.Success(dataApi))
     }.updateState().flowOn(dispatcher)
 
     suspend fun registerTag(tag: Tag) = flow<DataResult<Tag>> {
