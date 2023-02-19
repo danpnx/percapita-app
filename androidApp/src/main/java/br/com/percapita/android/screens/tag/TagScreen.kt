@@ -31,7 +31,7 @@ fun TagScreen(isSystemDarkTheme: Boolean, onBack: () -> Unit, onCreateTag: () ->
             LaunchedEffect(key1 = true) {
                 viewModel.getAllTags()
             }
-            
+
             when(tag) {
                 is DataResult.Success -> ContentTagScreen(tag as DataResult.Success<List<Tag>>)
                 else -> Unit
