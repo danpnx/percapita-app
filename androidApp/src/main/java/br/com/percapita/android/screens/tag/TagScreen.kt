@@ -15,22 +15,25 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.components.TagCard
 import br.com.percapita.android.components.TopBar
-import br.com.percapita.utils.DataResult
 import br.com.percapita.model.Tag
-import br.com.percapita.payload.TagList
+import br.com.percapita.utils.DataResult
 
 @Composable
 fun TagScreen(isSystemDarkTheme: Boolean, onBack: () -> Unit, onCreateTag: () -> Unit) {
     MyApplicationTheme(darkTheme = isSystemDarkTheme) {
+        val viewModel: TagScreenViewModel = viewModel()
+        val tag by viewModel.tag.collectAsState()
+
         Scaffold(
             topBar = { TopBar(title = "Tags", onBack = onBack) },
             floatingActionButton = { AddTag(onCreateTag) }
         ) { _ ->
-            val viewModel = viewModel<TagScreenViewModel>()
-            val tag = viewModel.tag.collectAsState()
+            LaunchedEffect(key1 = true) {
+                viewModel.getAllTags()
+            }
 
             when(tag) {
-                is DataResult.Success<*> -> ContentTagScreen(tag as DataResult.Success<TagList>)
+                is DataResult.Success -> ContentTagScreen(tag as DataResult.Success<List<Tag>>)
                 else -> Unit
             }
         }
@@ -38,17 +41,16 @@ fun TagScreen(isSystemDarkTheme: Boolean, onBack: () -> Unit, onCreateTag: () ->
 }
 
 @Composable
-fun ContentTagScreen(result: DataResult.Success<TagList>) {
+fun ContentTagScreen(result: DataResult.Success<List<Tag>>) {
     val tags = result.data
     LazyColumn(
         modifier = Modifier
-            .padding()
-            .height(445.dp),
+            .padding(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        items(tags.list.size) {
-            TagCard(tagName = tags.list[it].tagName)
+        items(tags.size) {
+            TagCard(tagName = tags[it].tagName)
         }
     }
 }

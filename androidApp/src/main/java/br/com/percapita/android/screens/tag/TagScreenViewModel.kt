@@ -2,7 +2,7 @@ package br.com.percapita.android.screens.tag
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.percapita.payload.TagList
+import br.com.percapita.model.Tag
 import br.com.percapita.repository.TagRepository
 import br.com.percapita.utils.DataResult
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,8 +18,8 @@ class TagScreenViewModel(
         getAllTags()
     }
 
-    private val _tag = MutableStateFlow<DataResult<TagList>?>(null)
-    val tag: StateFlow<DataResult<TagList>?> = _tag
+    private val _tag = MutableStateFlow<DataResult<List<Tag>>>(DataResult.Empty)
+    val tag: StateFlow<DataResult<List<Tag>>> = _tag
 
     fun getAllTags() = viewModelScope.launch {
         repository.getAllTags().collectLatest {
