@@ -14,13 +14,28 @@ class TagRepository(
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
 
-    suspend fun getAllTags() = flow {
+    suspend fun getAllTags() = flow<DataResult<List<Tag>>> {
         val dataApi = api.getAllTags()
         emit(DataResult.Success(dataApi))
     }.updateState().flowOn(dispatcher)
 
     suspend fun registerTag(tag: Tag) = flow<DataResult<Tag>> {
         val dataApi = api.registerTag(tag)
+        emit(DataResult.Success(dataApi))
+    }.updateState().flowOn(dispatcher)
+
+    suspend fun editTag(tag: Tag) = flow<DataResult<Tag>> {
+        val dataApi = api.editTag(tag)
+        emit(DataResult.Success(dataApi))
+    }.updateState().flowOn(dispatcher)
+
+    suspend fun deleteTag(tag: Tag) = flow {
+        val dataApi = api.deleteTag(tag)
+        emit(DataResult.Success(dataApi))
+    }.updateState().flowOn(dispatcher)
+
+    suspend fun getTag(tag: Tag) = flow {
+        val dataApi = api.getTag()
         emit(DataResult.Success(dataApi))
     }.updateState().flowOn(dispatcher)
 
