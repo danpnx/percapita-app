@@ -19,7 +19,13 @@ import br.com.percapita.model.Tag
 import br.com.percapita.utils.DataResult
 
 @Composable
-fun TagScreen(isSystemDarkTheme: Boolean, onBack: () -> Unit, onCreateTag: () -> Unit) {
+fun TagScreen(
+    isSystemDarkTheme: Boolean,
+    onBack: () -> Unit,
+    onCreateTag: () -> Unit,
+    onEditTag: (String) -> Unit,
+    onDeleteTag: (String) -> Unit
+) {
     MyApplicationTheme(darkTheme = isSystemDarkTheme) {
         val viewModel: TagScreenViewModel = viewModel()
         val tag by viewModel.tag.collectAsState()
@@ -33,7 +39,7 @@ fun TagScreen(isSystemDarkTheme: Boolean, onBack: () -> Unit, onCreateTag: () ->
             }
 
             when(tag) {
-                is DataResult.Success -> ContentTagScreen(tag as DataResult.Success<List<Tag>>)
+                is DataResult.Success -> ContentTagScreen(tag as DataResult.Success<List<Tag>>, onEditTag, onDeleteTag)
                 else -> Unit
             }
         }
@@ -41,7 +47,7 @@ fun TagScreen(isSystemDarkTheme: Boolean, onBack: () -> Unit, onCreateTag: () ->
 }
 
 @Composable
-fun ContentTagScreen(result: DataResult.Success<List<Tag>>) {
+fun ContentTagScreen(result: DataResult.Success<List<Tag>>, onEditTag: (String) -> Unit, onDeleteTag: (String) -> Unit) {
     val tags = result.data
     LazyColumn(
         modifier = Modifier
@@ -50,7 +56,12 @@ fun ContentTagScreen(result: DataResult.Success<List<Tag>>) {
         verticalArrangement = Arrangement.Center
     ) {
         items(tags.size) {
-            TagCard(tagName = tags[it].tagName)
+            TagCard(
+                tagName = tags[it].tagName,
+                id = tags[it].id,
+                onEditTag = onEditTag,
+                onDeleteTag = onDeleteTag
+            )
         }
     }
 }
@@ -74,11 +85,11 @@ fun AddTag(onCreateTag: () -> Unit) {
 @Composable
 @Preview
 fun TagScreen_Preview() {
-    TagScreen(isSystemDarkTheme = false, onBack = {}, onCreateTag = {})
+    TagScreen(isSystemDarkTheme = false, onBack = {}, onCreateTag = {}, {}, {})
 }
 
 @Composable
 @Preview
 fun TagScreenDark_Preview() {
-    TagScreen(isSystemDarkTheme = true, onBack = {}, onCreateTag = {})
+    TagScreen(isSystemDarkTheme = true, onBack = {}, onCreateTag = {}, {}, {})
 }
