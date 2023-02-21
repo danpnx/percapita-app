@@ -10,18 +10,18 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class CreateTagViewModel(
+class DeleteTagViewModel(
     private val repository: TagRepository = TagRepository.instance
 ): ViewModel() {
 
-    private val _registerTag: MutableStateFlow<DataResult<Tag>> = MutableStateFlow(DataResult.Empty)
-    val registerTag: StateFlow<DataResult<Tag>> = _registerTag
+    private val _deleteTag: MutableStateFlow<DataResult<Tag>> = MutableStateFlow(DataResult.Empty)
+    val deleteTag: StateFlow<DataResult<Tag>> = _deleteTag
 
-    fun registerTag(tagName: String, id: String?) = viewModelScope.launch {
-        val register = Tag(tagName = tagName, id = id ?: "")
+    fun deleteTag(tagName: String, id: String) = viewModelScope.launch {
+        val delete = Tag(tagName = tagName, id = id)
 
-        repository.registerTag(register).collectLatest {
-            _registerTag.value = it
+        repository.deleteTag(delete).collectLatest {
+            _deleteTag.value = it
         }
     }
 }

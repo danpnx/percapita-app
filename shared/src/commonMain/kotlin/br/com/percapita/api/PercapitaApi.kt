@@ -46,7 +46,7 @@ class PercapitaApi {
     }
 
     suspend fun editTag(tag: Tag): Tag {
-        return httpClient.put("$DEFAULT_URL/tag/edit/{id}") {
+        return httpClient.put("$DEFAULT_URL/tag/edit/${tag.id}") {
             setBody(tag)
         }.body()
     }
@@ -59,8 +59,8 @@ class PercapitaApi {
         return httpClient.get("$DEFAULT_URL/tag/all").body()
     }
 
-    suspend fun deleteTag(): Tag {
-        return httpClient.delete("$DEFAULT_URL/tag/delete/{id}").body()
+    suspend fun deleteTag(tag: Tag): Tag {
+        return httpClient.delete("$DEFAULT_URL/tag/delete/${tag.id}").body()
     }
 
     suspend fun signUp(user: User): User {
