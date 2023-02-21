@@ -50,7 +50,7 @@ fun CreateTagScreen(isSystemDarkTheme: Boolean, onBack: () -> Unit, onTagScreenN
                 )
 
                 Button(onClick = {
-                                 viewModel.registerTag(tagName = tagName.value.text)
+                                 viewModel.registerTag(tagName = tagName.value.text, id = null)
 
                     if(tagState is DataResult.Success) {
                         onTagScreenNavigation.invoke()
