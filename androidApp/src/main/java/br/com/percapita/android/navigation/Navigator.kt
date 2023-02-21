@@ -17,6 +17,7 @@ import br.com.percapita.android.screens.register_transaction.RegisterTransaction
 import br.com.percapita.android.screens.report.ReportScreen
 import br.com.percapita.android.screens.signup.SignUpScreen
 import br.com.percapita.android.screens.tag.CreateTagScreen
+import br.com.percapita.android.screens.tag.EditTagScreen
 import br.com.percapita.android.screens.tag.TagScreen
 
 
@@ -76,7 +77,11 @@ fun Navigator(
             TagScreen(
                 isSystemDarkTheme = isSystemDarkTheme,
                 onBack = { navHostController.popBackStack() },
-                onCreateTag = { navHostController.navigate(Route.CREATE_TAG_SCREEN.name) }
+                onCreateTag = { navHostController.navigate(Route.CREATE_TAG_SCREEN.name) },
+                onEditTag = {
+                    navHostController.navigate("${Route.EDIT_TAG_SCREEN.name}/$it") },
+                onDeleteTag = { 
+                    navHostController.navigate("${Route.TAG_SCREEN.name}")}
             )
         }
 
@@ -84,6 +89,16 @@ fun Navigator(
             CreateTagScreen(isSystemDarkTheme = isSystemDarkTheme,
                 onBack = { navHostController.popBackStack() },
                 onTagScreenNavigation = { navHostController.navigate(Route.TAG_SCREEN.name)})
+        }
+
+        composable("${Route.EDIT_TAG_SCREEN.name}/{id}") {
+            val id = it.arguments?.getString("id")
+            EditTagScreen(
+                isSystemDarkTheme = isSystemDarkTheme,
+                onBack = { navHostController.popBackStack() },
+                onTagScreenNavigation = { navHostController.navigate(Route.TAG_SCREEN.name) },
+                id = id ?: ""
+            )
         }
 
         composable(Route.REPORT_SCREEN.name) {
