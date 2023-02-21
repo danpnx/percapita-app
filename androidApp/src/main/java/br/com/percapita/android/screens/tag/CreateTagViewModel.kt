@@ -17,8 +17,8 @@ class CreateTagViewModel(
     private val _registerTag: MutableStateFlow<DataResult<Tag>> = MutableStateFlow(DataResult.Empty)
     val registerTag: StateFlow<DataResult<Tag>> = _registerTag
 
-    fun registerTag(tagName: String) = viewModelScope.launch {
-        val register = Tag(tagName = tagName)
+    fun registerTag(tagName: String, id: String?) = viewModelScope.launch {
+        val register = Tag(tagName = tagName, id = id ?: "")
 
         repository.registerTag(register).collectLatest {
             _registerTag.value = it
