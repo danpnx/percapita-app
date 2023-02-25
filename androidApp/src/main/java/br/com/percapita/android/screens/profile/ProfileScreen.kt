@@ -1,29 +1,27 @@
 package br.com.percapita.android.screens.profile
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Brightness4
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.components.*
+import br.com.percapita.model.User
+import br.com.percapita.utils.DataResult
 
 @Composable
 fun ProfileTopBar(title: String, darkTheme: Boolean, onBack: () -> Unit) {
@@ -78,74 +76,85 @@ fun ProfileScreen(
 ) {
     MyApplicationTheme(darkTheme) {
 
+        val viewModel: ProfileViewModel = viewModel()
+        val profile by viewModel.profile.collectAsState()
+
         Scaffold(modifier = Modifier.fillMaxSize(),
             backgroundColor = MaterialTheme.colors.background,
             contentColor = MaterialTheme.colors.onBackground,
             topBar = { ProfileTopBar(title = "Perfil", darkTheme, onBack) },
             bottomBar = { BottomBar(navController) })  {
 
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(16.dp, vertical = 40.dp)
-                    .fillMaxSize()) {
-                val userName = remember { mutableStateOf(TextFieldValue()) }
-                val userEmail = remember { mutableStateOf(TextFieldValue()) }
-
-                Text(
-                    text = "Nome Completo:",
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(0.9f))
-                TextField(
-                    readOnly = true,
-                    value = userName.value,
-                    onValueChange = { userName.value = it },
-                    modifier = Modifier.fillMaxWidth(0.9f),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        unfocusedBorderColor = MaterialTheme.colors.onBackground
-                    )
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Text(
-                    text = "E-mail:",
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(0.9f))
-                TextField(
-                    readOnly = true,
-                    value = userEmail.value,
-                    onValueChange = { userEmail.value = it },
-                    modifier = Modifier.fillMaxWidth(0.9f),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        unfocusedBorderColor = MaterialTheme.colors.onBackground
-                    )
-                )
-
-                Spacer(modifier = Modifier.height(32.dp))
-
-                Button(onClick = { onEditProfile },
-                    modifier = Modifier.fillMaxWidth(0.8f),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary))
-                {
-                    Text(text = "Editar perfil", fontSize = 16.sp)
-                }
+            when(profile) {
+                is DataResult.Success -> ProfileScreenContent(profile as DataResult.Success<User>, onEditProfile)
+                else -> Unit
             }
 
-            Column(horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Bottom,
-                modifier = Modifier
-                    .padding(16.dp, vertical = 90.dp)
-                    .fillMaxSize()){
+        }
+    }
+}
 
-                Button(onClick = { /*TODO*/ },
-                    modifier = Modifier.fillMaxWidth(0.8f),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
-                ){
-                    Text(text = "Sair", fontSize = 16.sp)
-                }
-            }
+@Composable
+fun ProfileScreenContent(result: DataResult.Success<User>, onEditProfile: () -> Unit) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .padding(16.dp, vertical = 40.dp)
+            .fillMaxSize()) {
 
+        val profile = result.data
+
+        Text(
+            text = "Nome Completo:",
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(0.9f))
+        TextField(
+            readOnly = true,
+            value = profile.name,
+            onValueChange = { profile.name },
+            modifier = Modifier.fillMaxWidth(0.9f),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                unfocusedBorderColor = MaterialTheme.colors.onBackground
+            )
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "E-mail:",
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(0.9f))
+        TextField(
+            readOnly = true,
+            value = profile.username,
+            onValueChange = { profile.username },
+            modifier = Modifier.fillMaxWidth(0.9f),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                unfocusedBorderColor = MaterialTheme.colors.onBackground
+            )
+        )
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        Button(onClick = { onEditProfile.invoke() },
+            modifier = Modifier.fillMaxWidth(0.8f),
+            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary))
+        {
+            Text(text = "Editar perfil", fontSize = 16.sp)
+        }
+    }
+
+    Column(horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Bottom,
+        modifier = Modifier
+            .padding(16.dp, vertical = 90.dp)
+            .fillMaxSize()){
+
+        Button(onClick = { /*TODO*/ },
+            modifier = Modifier.fillMaxWidth(0.8f),
+            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
+        ){
+            Text(text = "Sair", fontSize = 16.sp)
         }
     }
 }
