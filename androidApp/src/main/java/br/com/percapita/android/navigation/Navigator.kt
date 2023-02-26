@@ -14,7 +14,6 @@ import br.com.percapita.android.screens.login.forgot_password.ForgotPasswordScre
 import br.com.percapita.android.screens.profile.ConfigurationScreen
 import br.com.percapita.android.screens.profile.ProfileScreen
 import br.com.percapita.android.screens.register_transaction.RegisterTransactionScreen
-import br.com.percapita.android.screens.report.ReportScreen
 import br.com.percapita.android.screens.signup.SignUpScreen
 import br.com.percapita.android.screens.tag.CreateTagScreen
 import br.com.percapita.android.screens.tag.TagScreen
@@ -82,14 +81,6 @@ fun Navigator(
 
         composable(Route.CREATE_TAG_SCREEN.name) {
             CreateTagScreen(isSystemDarkTheme = isSystemDarkTheme, onBack = { navHostController.popBackStack() })
-        }
-
-        composable(Route.REPORT_SCREEN.name) {
-            ReportScreen(
-                isSystemDarkTheme = isSystemDarkTheme,
-                navController = navHostController,
-                onBack = { navHostController.popBackStack() }
-            )
         }
 
         composable(Route.PROFILE.name) {
