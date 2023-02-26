@@ -17,8 +17,8 @@ class ReportRepository(
     private val api: PercapitaApi = PercapitaApi.instance,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
-    suspend fun report(date: String) = flow<DataResult<Report>> {
-        val dataApi = api.report(date)
+    suspend fun report() = flow<DataResult<Report>> {
+        val dataApi = api.report()
         emit(DataResult.Success(dataApi))
     }.updateState().flowOn(dispatcher)
 

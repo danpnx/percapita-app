@@ -22,12 +22,11 @@ class HomeViewModel(
     val report: StateFlow<DataResult<Report>> = _report
 
     init {
-        val date = LocalDate.now().toString()
-        report(date)
+        report()
     }
 
-    private fun report(date: String) = viewModelScope.launch {
-        repository.report(date).collectLatest {
+    private fun report() = viewModelScope.launch {
+        repository.report().collectLatest {
             _report.value = it
         }
     }

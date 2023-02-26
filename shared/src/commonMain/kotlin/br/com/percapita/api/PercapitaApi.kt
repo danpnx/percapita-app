@@ -166,7 +166,7 @@ class PercapitaApi {
         }
     }
 
-    suspend fun report(date: String): Report {
+    suspend fun report(): Report {
         return httpClient.get("$DEFAULT_URL/report").body()
     }
 }
