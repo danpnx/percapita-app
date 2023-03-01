@@ -21,7 +21,7 @@ import br.com.percapita.android.components.TopBar
 import br.com.percapita.utils.DataResult
 
 @Composable
-fun CreateTagScreen(isSystemDarkTheme: Boolean, onBack: () -> Unit, onTagScreenNavigation: () -> Unit) {
+fun CreateTagScreen(isSystemDarkTheme: Boolean, onBack: () -> Unit) {
     MyApplicationTheme(darkTheme = isSystemDarkTheme) {
         Scaffold(
             topBar = { TopBar(title = "Criar Tag", onBack = onBack) }
@@ -31,7 +31,6 @@ fun CreateTagScreen(isSystemDarkTheme: Boolean, onBack: () -> Unit, onTagScreenN
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier.padding(it)
             ) {
-                Spacer(modifier = Modifier.height(300.dp))
                 val tagName = remember { mutableStateOf(TextFieldValue()) }
                 val viewModel = viewModel<CreateTagViewModel>()
                 val tagState by viewModel.registerTag.collectAsState()
@@ -50,10 +49,10 @@ fun CreateTagScreen(isSystemDarkTheme: Boolean, onBack: () -> Unit, onTagScreenN
                 )
 
                 Button(onClick = {
-                                 viewModel.registerTag(tagName = tagName.value.text, id = null)
+                    viewModel.registerTag(tagName = tagName.value.text, id = null)
 
                     if(tagState is DataResult.Success) {
-                        onTagScreenNavigation.invoke()
+                        onBack.invoke()
                         Toast.makeText(context, "Tag ${tagName.value.text} criada com sucesso!", Toast.LENGTH_SHORT).show()
                     }
 
@@ -72,11 +71,11 @@ fun CreateTagScreen(isSystemDarkTheme: Boolean, onBack: () -> Unit, onTagScreenN
 @Composable
 @Preview
 fun NewTagScreen_Preview() {
-    CreateTagScreen(isSystemDarkTheme = false, onBack = {}, {})
+    CreateTagScreen(isSystemDarkTheme = false, onBack = {})
 }
 
 @Composable
 @Preview
 fun NewTagScreenDark_Preview() {
-    CreateTagScreen(isSystemDarkTheme = true, onBack = {}, {})
+    CreateTagScreen(isSystemDarkTheme = true, onBack = {})
 }
