@@ -80,15 +80,16 @@ fun Navigator(
                 onCreateTag = { navHostController.navigate(Route.CREATE_TAG_SCREEN.name) },
                 onEditTag = {
                     navHostController.navigate("${Route.EDIT_TAG_SCREEN.name}/$it") },
-                onDeleteTag = { 
-                    navHostController.navigate("${Route.TAG_SCREEN.name}")}
+                onDeleteTag = {
+                     navHostController.navigate("${Route.TAG_SCREEN.name}")},
+                onRegisterTransaction = {
+                    navHostController.navigate("${Route.REGISTER_TRANSACTION.name}") }
             )
         }
 
         composable(Route.CREATE_TAG_SCREEN.name) {
             CreateTagScreen(isSystemDarkTheme = isSystemDarkTheme,
-                onBack = { navHostController.popBackStack() },
-                onTagScreenNavigation = { navHostController.navigate(Route.TAG_SCREEN.name)})
+                onBack = { navHostController.popBackStack() })
         }
 
         composable("${Route.EDIT_TAG_SCREEN.name}/{id}") {
@@ -96,7 +97,6 @@ fun Navigator(
             EditTagScreen(
                 isSystemDarkTheme = isSystemDarkTheme,
                 onBack = { navHostController.popBackStack() },
-                onTagScreenNavigation = { navHostController.navigate(Route.TAG_SCREEN.name) },
                 id = id ?: ""
             )
         }
