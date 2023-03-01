@@ -28,7 +28,10 @@ import br.com.percapita.android.util.DateUtil.DATE_LENGTH
 import br.com.percapita.android.util.DateUtil.DATE_MASK
 import br.com.percapita.android.util.MaskVisualTransformation
 import br.com.percapita.enums.TransactionCategory
-import br.com.percapita.payload.FinancialTransactionPayload
+import androidx.compose.material.Text
+import androidx.compose.material.Icon
+import androidx.lifecycle.viewmodel.compose.viewModel
+import br.com.percapita.model.Tag
 
 /**
  * @project PerCapita
@@ -48,26 +51,21 @@ fun RegisterTransactionScreen(
             topBar = { TopBar(title = "", onBack) },
             scaffoldState = rememberScaffoldState()
         ) {
+
             val transactionTypes = listOf("Pagamento", "Recebimento")
-            var value by remember {
-                mutableStateOf("")
-            }
-            var selectedType by remember {
-                mutableStateOf(transactionTypes[0])
-            }
-            var isExpanded by remember {
-                mutableStateOf(false)
-            }
-            var date by remember {
-                mutableStateOf("")
-            }
-            var description by remember {
-                mutableStateOf("")
-            }
-            var tag by remember {
-                mutableStateOf("")
-            }
-            val isButtonEnabled = value != "" && date != "" && tag != ""
+            var selectedType by remember { mutableStateOf(transactionTypes[0]) }
+            var value by remember { mutableStateOf("") }
+            var isExpanded by remember { mutableStateOf(false) }
+            var date by remember { mutableStateOf("") }
+            var description by remember { mutableStateOf("") }
+
+            val viewModel = viewModel<RegisterTransactionViewModel>()
+            val transactionState by viewModel.registerTransaction.collectAsState()
+
+
+            val tag = remember { mutableStateOf<Tag?>(null)}
+
+            val isButtonEnabled = value != "" && date != "" /*&& tag.value?.tagName != ""*/
 
             Column(
                 modifier = Modifier
@@ -77,7 +75,7 @@ fun RegisterTransactionScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                androidx.compose.material.Text(
+                Text(
                     text = "Registrar Transação",
                     fontWeight = FontWeight.Bold,
                     fontSize = 25.sp,
@@ -91,7 +89,7 @@ fun RegisterTransactionScreen(
                     onValueChange = { str ->
                         if (str.length <= DATE_LENGTH) date = str
                     },
-                    label = { androidx.compose.material.Text(text = "Data") },
+                    label = { Text(text = "Data") },
                     visualTransformation = MaskVisualTransformation(DATE_MASK),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -104,9 +102,8 @@ fun RegisterTransactionScreen(
                 OutlinedTextField(
                     value = value,
                     onValueChange = { str ->
-                        value = str
-                    },
-                    label = { androidx.compose.material.Text(text = "Valor") },
+                        value = str },
+                    label = { Text(text = "Valor") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         MaterialTheme.colors.onBackground
@@ -120,34 +117,32 @@ fun RegisterTransactionScreen(
                     onValueChange = { str ->
                         if (description.length <= 75) description = str
                     },
-                    label = { androidx.compose.material.Text(text = "Descrição") },
+                    label = { Text(text = "Descrição") },
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         MaterialTheme.colors.onBackground
                     )
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
-
-                OutlinedTextField(
-                    value = tag,
-                    onValueChange = { str ->
-                        tag = str
-                    },
-                    label = { androidx.compose.material.Text(text = "Tag") },
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        MaterialTheme.colors.onBackground
-                    ),
-                    readOnly = true,
-                    trailingIcon = {
-                        IconButton(onClick = onOpenTags) {
-                            androidx.compose.material.Icon(
-                                imageVector = Icons.Filled.ArrowForward,
-                                contentDescription = "Ir para tags",
-                                tint = MaterialTheme.colors.primary
-                            )
-                        }
-                    }
-                )
+//                OutlinedTextField(
+//                    value = tag.value?.tagName ?: "",
+//                    onValueChange = {
+//                        tag.value?.tagName
+//                    },
+//                    label = { Text(text = tag.value?.tagName ?: "Tag") },
+//                    colors = TextFieldDefaults.outlinedTextFieldColors(
+//                        MaterialTheme.colors.onBackground
+//                    ),
+//                    readOnly = true,
+//                    trailingIcon = {
+//                        IconButton(onClick = onOpenTags) {
+//                            Icon(
+//                                imageVector = Icons.Filled.ArrowForward,
+//                                contentDescription = "Ir para tags",
+//                                tint = MaterialTheme.colors.primary
+//                            )
+//                        }
+//                    }
+//                )
 
                 Spacer(modifier = Modifier.height(24.dp))
 
@@ -159,7 +154,7 @@ fun RegisterTransactionScreen(
                         value = selectedType,
                         onValueChange = {},
                         readOnly = true,
-                        label = { androidx.compose.material.Text(text = "Tipo da Transação") },
+                        label = { Text(text = "Tipo da Transação") },
                         trailingIcon = {
                             ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded)
                         },
@@ -177,7 +172,7 @@ fun RegisterTransactionScreen(
                                     isExpanded = false
                                 }
                             ) {
-                                androidx.compose.material.Text(text = selectedOption)
+                                Text(text = selectedOption)
                             }
                         }
                     }
@@ -187,12 +182,14 @@ fun RegisterTransactionScreen(
 
                 Button(
                     onClick = {
-                              FinancialTransactionPayload(
-                                  transactionValue = value,
+                              viewModel.registerTransaction(
+                                  transactionId = null,
+                                  transactionValue = value.replace(",", ".").toDouble(),
                                   transactionCategory = if(selectedType == "Pagamento") TransactionCategory.PAYMENT
                                   else TransactionCategory.RECEIPT,
                                   transactionDate = convertToDate(date),
-                                  transactionDescription = description
+                                  transactionDescription = description,
+                                  //tagName = tag.value?.tagName ?: ""
                               )
                     },
                     enabled = isButtonEnabled,
@@ -202,7 +199,7 @@ fun RegisterTransactionScreen(
                         if(isButtonEnabled) 1f else 0.50f
                     )
                 ) {
-                    androidx.compose.material.Text(
+                    Text(
                         text = "Confirmar",
                         color = if(isButtonEnabled) MaterialTheme.colors.onPrimary
                         else Color.LightGray
