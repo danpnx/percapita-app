@@ -103,19 +103,19 @@ class PercapitaApi {
         }.body()
     }
 
-    suspend fun deleteTransaction(): FinancialTransaction {
+    suspend fun deleteTransaction(financialTransaction: FinancialTransaction): FinancialTransaction {
         return httpClient.delete("$DEFAULT_URL/transaction/delete/{id}").body()
     }
 
-    suspend fun getTransactionByCategory(): FinancialTransaction {
+    suspend fun getTransactionByCategory(financialTransaction: FinancialTransaction): FinancialTransaction {
         return httpClient.get("$DEFAULT_URL/transaction/by-category").body()
     }
 
-    suspend fun getTransactionById(): FinancialTransaction {
+    suspend fun getTransactionById(financialTransaction: FinancialTransaction): FinancialTransaction {
         return httpClient.get("$DEFAULT_URL/transaction/{id}").body()
     }
 
-    suspend fun  getAllTransactions(): FinancialTransactionPayload {
+    suspend fun  getAllTransactions(): List<FinancialTransaction> {
         return httpClient.get("$DEFAULT_URL/transaction/all").body()
     }
 
@@ -166,7 +166,7 @@ class PercapitaApi {
         }
     }
 
-    suspend fun report(date: String): Report {
+    suspend fun report(): Report {
         return httpClient.get("$DEFAULT_URL/report").body()
     }
 }
