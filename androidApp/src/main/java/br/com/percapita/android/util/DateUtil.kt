@@ -8,7 +8,7 @@ import java.util.*
 
 object DateUtil {
     @RequiresApi(Build.VERSION_CODES.O)
-    val dtf: DateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+    val dtf: DateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
     val locale = Locale("pt", "BR")
     const val DATE_MASK = "##/##/####"
     const val DATE_LENGTH = 8
