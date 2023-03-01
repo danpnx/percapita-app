@@ -22,7 +22,6 @@ class HomeViewModel(
     val report: StateFlow<DataResult<Report>> = _report
 
     init {
-        //val date = LocalDate.now().toString()
         report()
     }
 

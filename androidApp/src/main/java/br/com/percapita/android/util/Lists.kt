@@ -28,12 +28,6 @@ object Lists {
             Route.HISTORY
         ),
         BottomNavItem(
-            "Relatório",
-            Icons.Filled.PieChart,
-            "Relatórios",
-            Route.REPORT_SCREEN
-        ),
-        BottomNavItem(
             "Perfil",
             Icons.Filled.Person,
             "Perfil",
