@@ -24,12 +24,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.screens.tag.DeleteTagViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TagCard(
     id: String,
     tagName: String,
     onEditTag: (String) -> Unit,
-    onDeleteTag: (String) -> Unit
+    onDeleteTag: (String) -> Unit,
+    onRegisterTransaction: (String) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -38,13 +40,13 @@ fun TagCard(
             .height(50.dp),
         colors = CardDefaults.cardColors(MaterialTheme.colors.surface),
         shape = RectangleShape,
-        elevation = CardDefaults.cardElevation(2.dp)
+        elevation = CardDefaults.cardElevation(2.dp),
+        onClick = { onRegisterTransaction.invoke(tagName) }
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
-                .clickable { }
         ) {
             Row(verticalAlignment = Alignment.CenterVertically)
             {
@@ -137,7 +139,7 @@ fun DropdownMenuTag(
 @Preview
 fun TagCard_Preview() {
     MyApplicationTheme(darkTheme = false) {
-        TagCard("1", "TesteA", {}, {})
+        TagCard("1", "TesteA", {}, {}, {})
     }
 }
 
@@ -145,6 +147,6 @@ fun TagCard_Preview() {
 @Preview
 fun TagCardDark_Preview() {
     MyApplicationTheme(darkTheme = true) {
-        TagCard("1", "TesteB", {}, {})
+        TagCard("1", "TesteB", {}, {}, {})
     }
 }

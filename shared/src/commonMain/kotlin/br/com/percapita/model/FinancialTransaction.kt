@@ -1,17 +1,14 @@
 package br.com.percapita.model
 
 import br.com.percapita.enums.TransactionCategory
+import kotlinx.serialization.Serializable
 
-/**
- * @project PerCapita
- * @author Daniel Augusto on 03/02/2023
- **/
+@Serializable
 data class FinancialTransaction(
     val transactionId: String,
-    val transactionValue: String,
+    val transactionValue: Double,
     val transactionCategory: TransactionCategory,
     val transactionDate: String,
     val transactionDescription: String,
-    val tagName: String,
-    val links: List<String>
+    //val tagName: String
 )

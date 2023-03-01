@@ -28,10 +28,6 @@ import br.com.percapita.model.FinancialTransaction
 import java.time.Month
 import java.time.format.TextStyle
 
-/**
- * @project PerCapita
- * @author Daniel Augusto on 03/02/2023
- **/
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -68,13 +64,16 @@ fun TransactionCard(
             Icon(
                 imageVector = icon,
                 contentDescription = "Ícone de transação",
-                modifier = Modifier.padding(end = 5.dp),
-                tint = iconColor
+                modifier = Modifier.padding(end = 5.dp)
+                    .align(Alignment.CenterVertically),
+                tint = iconColor,
+
             )
+            Spacer(modifier = Modifier.width(10.dp))
 
             Column {
                 Text(
-                    text = transaction.tagName,
+                    text = "",
                     color = MaterialTheme.colors.onSurface,
                     fontSize = 17.sp,
                     fontStyle = FontStyle.Normal,
@@ -133,12 +132,11 @@ fun getIconColor(transactionCategory: TransactionCategory): Color {
 fun TransactionCardPreview() {
     val transaction = FinancialTransaction(
         "1",
-        "100.00",
+        100.00,
         TransactionCategory.PAYMENT,
         "01/02/2023",
         "",
-        "Jogos",
-        listOf()
+       // "Jogos"
     )
     MyApplicationTheme(darkTheme = false) {
         TransactionCard(transaction, onTransactionClick = { })
@@ -151,12 +149,11 @@ fun TransactionCardPreview() {
 fun TransactionCardPreviewDark() {
     val transaction = FinancialTransaction(
         "2",
-        "200.00",
+        200.00,
         TransactionCategory.RECEIPT,
         "04/02/2023",
         "Venda de móvel",
-        "Vendas",
-        listOf()
+       // "Vendas"
     )
     MyApplicationTheme(darkTheme = true) {
         TransactionCard(transaction, onTransactionClick = { })
