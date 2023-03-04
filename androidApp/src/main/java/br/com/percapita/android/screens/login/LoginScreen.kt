@@ -89,18 +89,20 @@ fun LoginScreen(
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
+
+                if (loginState is DataResult.Error) {
+                    Toast.makeText(context, "Usuário e/ou senha inválido", Toast.LENGTH_SHORT).show()
+                    viewModel.defaultState()
+                }
+
+                if (loginState is DataResult.Success) {
+                    onHomeNavigation.invoke()
+                    viewModel.defaultState()
+                }
+
                 Button(
                     onClick = {
                         viewModel.login(username.value.text, password.value.text)
-
-                        if (loginState is DataResult.Error) {
-                            Toast.makeText(context, "Usuário e/ou senha inválido", Toast.LENGTH_SHORT).show()
-                        }
-
-                        if (loginState is DataResult.Success && !navigateToHome.value) {
-                            onHomeNavigation.invoke()
-                            navigateToHome.value = true
-                        }
                     },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF04C457))
