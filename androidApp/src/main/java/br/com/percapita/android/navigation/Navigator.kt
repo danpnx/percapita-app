@@ -1,5 +1,6 @@
 package br.com.percapita.android.navigation
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
@@ -13,18 +14,16 @@ import br.com.percapita.android.screens.login.LoginScreen
 import br.com.percapita.android.screens.login.forgot_password.ForgotPasswordScreen
 import br.com.percapita.android.screens.profile.ConfigurationScreen
 import br.com.percapita.android.screens.profile.ProfileScreen
-import br.com.percapita.android.screens.register_transaction.RegisterTransactionScreen
+import br.com.percapita.android.screens.transaction.RegisterTransactionScreen
 import br.com.percapita.android.screens.signup.SignUpScreen
 import br.com.percapita.android.screens.tag.CreateTagScreen
 import br.com.percapita.android.screens.tag.EditTagScreen
 import br.com.percapita.android.screens.tag.TagScreen
+import br.com.percapita.android.screens.transaction.EditTransactionScreen
+import br.com.percapita.android.screens.transaction.TransactionScreen
 
 
-/**
- * @project PerCapita
- * @author Daniel Augusto on 02/02/2023
- **/
-
+@SuppressLint("SuspiciousIndentation")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Navigator(
@@ -59,7 +58,32 @@ fun Navigator(
                 isSystemDarkTheme = isSystemDarkTheme,
                 navController = navHostController,
                 onBack = { navHostController.popBackStack() },
-                onClickRegisterTransaction = { navHostController.navigate(Route.REGISTER_TRANSACTION.name) }
+                onClickRegisterTransaction = { navHostController.navigate(Route.REGISTER_TRANSACTION.name) },
+                onTransactionClick = {
+                    navHostController.navigate("${Route.TRANSACTION_SCREEN.name}/$it") },
+            )
+        }
+
+        composable("${Route.TRANSACTION_SCREEN.name}/{id}") {
+            val id = it.arguments?.getString("id")
+            TransactionScreen(
+                isSystemDarkTheme = isSystemDarkTheme,
+                onBack = { navHostController.popBackStack() },
+                id = id ?: "",
+                onDeleteTransaction = { navHostController.popBackStack() },
+                onEditTransaction = {
+                    navHostController.navigate("${Route.EDIT_TRANSACTION_SCREEN.name}/$it")
+                }
+            )
+        }
+
+        composable("${Route.EDIT_TRANSACTION_SCREEN.name}/{id}") {
+            val id = it.arguments?.getString("id")
+            EditTransactionScreen(
+                isSystemDarkTheme = isSystemDarkTheme,
+                onBack = { navHostController.popBackStack() },
+                id = id ?: "",
+                onSaveChanges = { navHostController.popBackStack() }
             )
         }
 
@@ -68,7 +92,7 @@ fun Navigator(
                 isSystemDarkTheme = isSystemDarkTheme,
                 onBack = { navHostController.popBackStack() },
                 onOpenTags = { navHostController.navigate(Route.TAG_SCREEN.name) },
-                onConfirm = {}
+                onConfirm = { navHostController.popBackStack() }
             )
         }
 
