@@ -127,20 +127,22 @@ fun SignUpScreen(onLoginNavigation: () -> Unit) {
 
                 Spacer(modifier = Modifier.height(30.dp))
 
+                if (signUpState is DataResult.Success) {
+                    onLoginNavigation.invoke()
+                    viewModel.defaultState()
+                    Toast.makeText(context, "Conta criada com sucesso!", Toast.LENGTH_SHORT).show()
+                }
+                if (signUpState is DataResult.Error) {
+                    Toast.makeText(context, "Por favor, insira os dados corretamente", Toast.LENGTH_SHORT).show()
+                    viewModel.defaultState()
+                }
+
                 Button(
                     onClick = {
                         viewModel.signUp(
                             name = name.value.text,
                             username = username.value.text,
                             password = password.value.text)
-                        if (signUpState is DataResult.Success && !navigateToHome.value) {
-                            onLoginNavigation.invoke()
-                            navigateToHome.value = true
-                            Toast.makeText(context, "Conta criada com sucesso!", Toast.LENGTH_SHORT).show()
-                        }
-                        if (signUpState is DataResult.Error) {
-                            Toast.makeText(context, "Por favor, insira os dados corretamente", Toast.LENGTH_SHORT).show()
-                        }
                     },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF04C457)),
                     modifier = Modifier.fillMaxWidth(0.8f)

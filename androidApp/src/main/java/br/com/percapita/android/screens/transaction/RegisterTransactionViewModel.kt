@@ -1,4 +1,4 @@
-package br.com.percapita.android.screens.register_transaction
+package br.com.percapita.android.screens.transaction
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,8 +6,6 @@ import br.com.percapita.enums.TransactionCategory
 import br.com.percapita.model.FinancialTransaction
 import br.com.percapita.repository.TransactionRepository
 import br.com.percapita.utils.DataResult
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest

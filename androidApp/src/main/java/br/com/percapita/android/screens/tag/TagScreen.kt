@@ -1,5 +1,6 @@
 package br.com.percapita.android.screens.tag
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,6 +21,7 @@ import br.com.percapita.android.components.TopBar
 import br.com.percapita.model.Tag
 import br.com.percapita.utils.DataResult
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun TagScreen(
     isSystemDarkTheme: Boolean,

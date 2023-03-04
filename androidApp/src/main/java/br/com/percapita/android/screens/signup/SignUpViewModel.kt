@@ -24,4 +24,8 @@ class SignUpViewModel(
             _signUp.value = it
         }
     }
+
+    fun defaultState() {
+        _signUp.value = DataResult.Empty
+    }
 }
