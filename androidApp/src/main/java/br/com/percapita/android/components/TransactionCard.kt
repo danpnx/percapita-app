@@ -34,13 +34,13 @@ import java.time.format.TextStyle
 @Composable
 fun TransactionCard(
     transaction: FinancialTransaction,
-    onTransactionClick: () -> Unit
+    onTransactionClick: (String) -> Unit
 ) {
     Card(
         modifier = Modifier.fillMaxWidth().padding(bottom = 1.dp),
         elevation = CardDefaults.cardElevation(2.dp),
         colors = CardDefaults.cardColors(MaterialTheme.colors.surface),
-        onClick = onTransactionClick,
+        onClick =  { onTransactionClick.invoke(transaction.transactionId) },
         shape = RectangleShape
     ) {
         val icon = getIcon(transaction.transactionCategory)
@@ -136,7 +136,7 @@ fun TransactionCardPreview() {
         TransactionCategory.PAYMENT,
         "01/02/2023",
         "",
-       // "Jogos"
+        //"Jogos"
     )
     MyApplicationTheme(darkTheme = false) {
         TransactionCard(transaction, onTransactionClick = { })
@@ -153,7 +153,7 @@ fun TransactionCardPreviewDark() {
         TransactionCategory.RECEIPT,
         "04/02/2023",
         "Venda de móvel",
-       // "Vendas"
+        //"Vendas"
     )
     MyApplicationTheme(darkTheme = true) {
         TransactionCard(transaction, onTransactionClick = { })
