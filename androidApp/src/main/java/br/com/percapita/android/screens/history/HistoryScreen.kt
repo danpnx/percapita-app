@@ -1,5 +1,6 @@
 package br.com.percapita.android.screens.history
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
@@ -29,13 +30,15 @@ import br.com.percapita.model.FinancialTransaction
 import br.com.percapita.utils.DataResult
 
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HistoryScreen(
     isSystemDarkTheme: Boolean,
     navController: NavController,
     onBack: () -> Unit,
-    onClickRegisterTransaction: () -> Unit
+    onClickRegisterTransaction: () -> Unit,
+    onTransactionClick: (String) -> Unit
 ) {
     MyApplicationTheme(darkTheme = isSystemDarkTheme) {
         val viewModel = viewModel<HistoryScreenViewModel>()
@@ -48,7 +51,7 @@ fun HistoryScreen(
         ) { _ ->
             when(historyState) {
                 is DataResult.Success -> ContentHistoryScreen(
-                    historyState as DataResult.Success<List<FinancialTransaction>>
+                    historyState as DataResult.Success<List<FinancialTransaction>>, onTransactionClick
                 )
                 else -> ContentHistoryScreenEmpty()
             }
@@ -57,12 +60,12 @@ fun HistoryScreen(
 }
 
 @Composable
-fun ContentHistoryScreen(result: DataResult.Success<List<FinancialTransaction>>) {
+fun ContentHistoryScreen(result: DataResult.Success<List<FinancialTransaction>>, onTransactionClick: (String) -> Unit) {
     val transaction = result.data
     LazyColumn(
         modifier = Modifier.padding()) {
         items(transaction) { transaction ->
-            TransactionCard(transaction = transaction, onTransactionClick = {})
+            TransactionCard(transaction = transaction, onTransactionClick = onTransactionClick)
         }
     }
 }
@@ -121,7 +124,8 @@ fun HistoryScreenPreview() {
         isSystemDarkTheme = false,
         navController = rememberNavController(),
         onBack = {},
-        onClickRegisterTransaction = {}
+        onClickRegisterTransaction = {},
+        onTransactionClick = {}
     )
 }
 
@@ -133,7 +137,8 @@ fun HistoryScreenPreviewDark() {
         isSystemDarkTheme = true,
         navController = rememberNavController(),
         onBack = {},
-        onClickRegisterTransaction = {}
+        onClickRegisterTransaction = {},
+        onTransactionClick = {}
     )
 }
 
