@@ -80,7 +80,7 @@ fun ContentHome(result: DataResult.Success<Report>) {
             )
             Text(
                 text = "R$ ${it.value}",
-                color = if(it.value > 0) Color(0xFF45C232) else Color(0xFFFB6969),
+                color = if(it.value > 0) Color(0xFF00AB41) else Color(0xFFFB6969),
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(start = 10.dp, top = 5.dp)

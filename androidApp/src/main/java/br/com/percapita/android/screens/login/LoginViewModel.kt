@@ -23,4 +23,8 @@ class LoginViewModel(private val repository: LoginRepository = LoginRepository.i
             _loginState.value = it
         }
     }
+
+    fun defaultState() {
+        _loginState.value = DataResult.Empty
+    }
 }

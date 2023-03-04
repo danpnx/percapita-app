@@ -103,54 +103,60 @@ class PercapitaApi {
         }.body()
     }
 
-    suspend fun deleteTransaction(): FinancialTransaction {
-        return httpClient.delete("$DEFAULT_URL/transaction/delete/{id}").body()
+    suspend fun deleteTransaction(transactionId: String): FinancialTransaction {
+        return httpClient.delete("$DEFAULT_URL/transaction/delete/${transactionId}").body()
     }
 
-    suspend fun getTransactionByCategory(): FinancialTransaction {
+    suspend fun getTransactionByCategory(financialTransaction: FinancialTransaction): FinancialTransaction {
         return httpClient.get("$DEFAULT_URL/transaction/by-category").body()
     }
 
-    suspend fun getTransactionById(): FinancialTransaction {
-        return httpClient.get("$DEFAULT_URL/transaction/{id}").body()
+    suspend fun getTransactionById(transactionId: String): FinancialTransaction {
+        return httpClient.get("$DEFAULT_URL/transaction/${transactionId}").body()
     }
 
-    suspend fun  getAllTransactions(): FinancialTransactionPayload {
+    suspend fun  getAllTransactions(): List<FinancialTransaction> {
         return httpClient.get("$DEFAULT_URL/transaction/all").body()
     }
 
     suspend fun editValue(financialTransaction: FinancialTransaction): FinancialTransaction {
-        return httpClient.put("$DEFAULT_URL/transaction/edit/value") {
+        return httpClient.put("$DEFAULT_URL/transaction/${financialTransaction.transactionId}/value") {
             setBody(financialTransaction)
         }.body()
     }
 
     suspend fun editCategory(financialTransaction: FinancialTransaction): FinancialTransaction {
-        return httpClient.put("$DEFAULT_URL/transaction/edit/category") {
+        return httpClient.put("$DEFAULT_URL/transaction/${financialTransaction.transactionId}/category") {
             setBody(financialTransaction)
         }.body()
     }
 
     suspend fun editDate(financialTransaction: FinancialTransaction): FinancialTransaction {
-        return httpClient.put("$DEFAULT_URL/transaction/edit/date") {
+        return httpClient.put("$DEFAULT_URL/transaction/${financialTransaction.transactionId}/date") {
             setBody(financialTransaction)
         }.body()
     }
 
     suspend fun editDescription(financialTransaction: FinancialTransaction): FinancialTransaction {
-        return httpClient.put("$DEFAULT_URL/transaction/edit/description") {
+        return httpClient.put("$DEFAULT_URL/transaction/${financialTransaction.transactionId}/description") {
             setBody(financialTransaction)
         }.body()
     }
 
     suspend fun changeTag(financialTransaction: FinancialTransaction): FinancialTransaction {
-        return httpClient.put("$DEFAULT_URL/transaction/edit/tag") {
+        return httpClient.put("$DEFAULT_URL/transaction/${financialTransaction.transactionId}/tag") {
             setBody(financialTransaction)
         }.body()
     }
 
     suspend fun findByTag(): FinancialTransaction {
         return httpClient.get("$DEFAULT_URL/transaction/by-tag").body()
+    }
+
+    suspend fun editTransaction(financialTransaction: FinancialTransaction): FinancialTransaction {
+        return httpClient.put("$DEFAULT_URL/transaction/edit/${financialTransaction.transactionId}") {
+            setBody(financialTransaction)
+        }.body()
     }
 
     suspend fun login(login: Login): ProfileToken {

@@ -1,5 +1,6 @@
 package br.com.percapita.android.screens.history
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
@@ -10,44 +11,94 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.components.BottomBar
 import br.com.percapita.android.components.TopBar
 import br.com.percapita.android.components.TransactionCard
-import br.com.percapita.android.util.Lists.transactionList
+import br.com.percapita.model.FinancialTransaction
+import br.com.percapita.utils.DataResult
 
-/**
- * @project PerCapita
- * @author Daniel Augusto on 04/02/2023
- **/
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HistoryScreen(
     isSystemDarkTheme: Boolean,
     navController: NavController,
     onBack: () -> Unit,
-    onClickRegisterTransaction: () -> Unit
+    onClickRegisterTransaction: () -> Unit,
+    onTransactionClick: (String) -> Unit
 ) {
     MyApplicationTheme(darkTheme = isSystemDarkTheme) {
+        val viewModel = viewModel<HistoryScreenViewModel>()
+        val historyState by viewModel.transaction.collectAsState()
+
         Scaffold(
             bottomBar = { BottomBar(navController) },
             topBar = { TopBar(title = "Histórico", onBack = onBack) },
             floatingActionButton = { AddTransactionFAB(onClickRegisterTransaction) }
-        ) {
-            LazyColumn(modifier = Modifier.padding(it)) {
-                items(transactionList) { transaction ->
-                    TransactionCard(transaction = transaction, onTransactionClick = {})
-                }
+        ) { _ ->
+            when(historyState) {
+                is DataResult.Success -> ContentHistoryScreen(
+                    historyState as DataResult.Success<List<FinancialTransaction>>, onTransactionClick
+                )
+                else -> ContentHistoryScreenEmpty()
             }
         }
     }
 }
+
+@Composable
+fun ContentHistoryScreen(result: DataResult.Success<List<FinancialTransaction>>, onTransactionClick: (String) -> Unit) {
+    val transaction = result.data
+    LazyColumn(
+        modifier = Modifier.padding()) {
+        items(transaction) { transaction ->
+            TransactionCard(transaction = transaction, onTransactionClick = onTransactionClick)
+        }
+    }
+}
+
+@Composable
+fun ContentHistoryScreenEmpty() {
+    Column(
+        modifier = Modifier.padding(60.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Spacer(modifier = Modifier.height(200.dp))
+        Text(
+            text = "Nenhum lançamento no momento",
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colors.onBackground,
+            fontSize = 18.sp,
+            )
+        Spacer(modifier = Modifier.height(10.dp))
+        Text(
+            text = "Toque em  +",
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colors.onBackground,
+            fontSize = 17.sp)
+        Text(
+            text = "para adicionar uma nova transação.",
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colors.onBackground,
+            fontSize = 17.sp
+        )
+    }
+}
+
 
 @Composable
 fun AddTransactionFAB(onClickRegisterTransaction: () -> Unit) {
@@ -73,7 +124,8 @@ fun HistoryScreenPreview() {
         isSystemDarkTheme = false,
         navController = rememberNavController(),
         onBack = {},
-        onClickRegisterTransaction = {}
+        onClickRegisterTransaction = {},
+        onTransactionClick = {}
     )
 }
 
@@ -85,7 +137,8 @@ fun HistoryScreenPreviewDark() {
         isSystemDarkTheme = true,
         navController = rememberNavController(),
         onBack = {},
-        onClickRegisterTransaction = {}
+        onClickRegisterTransaction = {},
+        onTransactionClick = {}
     )
 }
 
@@ -103,4 +156,10 @@ fun AddTransactionFABDark() {
     MyApplicationTheme(darkTheme = true) {
         AddTransactionFAB(onClickRegisterTransaction = {})
     }
+}
+
+@Preview
+@Composable
+fun ContentHistoryScreenEmptyPreview() {
+    ContentHistoryScreenEmpty()
 }

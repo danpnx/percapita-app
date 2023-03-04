@@ -24,7 +24,6 @@ import br.com.percapita.utils.DataResult
 fun EditTagScreen(
     isSystemDarkTheme: Boolean,
     onBack: () -> Unit,
-    onTagScreenNavigation: () -> Unit,
     id: String
 ) {
     MyApplicationTheme(darkTheme = isSystemDarkTheme) {
@@ -58,7 +57,7 @@ fun EditTagScreen(
                     viewModel.editTag(tagName = tagName.value.text, id = id)
 
                     if(tagState is DataResult.Success) {
-                        onTagScreenNavigation.invoke()
+                        onBack.invoke()
                         Toast.makeText(context, "Nome atualizado com sucesso!", Toast.LENGTH_SHORT).show()
                     }
 
@@ -78,11 +77,11 @@ fun EditTagScreen(
 @Composable
 @Preview
 fun EditTag_Preview() {
-    EditTagScreen(isSystemDarkTheme = false, {}, {}, "")
+    EditTagScreen(isSystemDarkTheme = false, {}, "")
 }
 
 @Composable
 @Preview
 fun EditTag_DarkPreview() {
-    EditTagScreen(isSystemDarkTheme = true, {}, {}, "")
+    EditTagScreen(isSystemDarkTheme = true, {}, "")
 }
