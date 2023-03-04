@@ -53,13 +53,10 @@ fun ConfigurationScreenContent(result: DataResult.Success<User>, onSaveChanges: 
         modifier = Modifier
             .padding(16.dp, vertical = 40.dp)
             .fillMaxSize()) {
-        val userName = remember { mutableStateOf(TextFieldValue()) }
         val confirmNewPassowrd = remember { mutableStateOf(TextFieldValue())}
         val oldPassword = remember { mutableStateOf(TextFieldValue()) }
         val newPassword = remember { mutableStateOf(TextFieldValue()) }
         val passwordVisible = remember { mutableStateOf(false) }
-        val viewModel = viewModel<EditProfileViewModel>()
-        val profileState by viewModel.profile.collectAsState()
         val profile = result.data
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -69,12 +66,12 @@ fun ConfigurationScreenContent(result: DataResult.Success<User>, onSaveChanges: 
             textAlign = TextAlign.Left,
             modifier = Modifier.fillMaxWidth(0.9f))
         OutlinedTextField(modifier = Modifier.fillMaxWidth(0.9f),
-            value = userName.value,
-            onValueChange = { userName.value = it },
+            value = profile.name,
+            onValueChange = { profile.name = it },
             label = { Text(text = "Nome Completo") },
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 unfocusedBorderColor = MaterialTheme.colors.onBackground,
-                unfocusedLabelColor = MaterialTheme.colors.onSurface
+                unfocusedLabelColor  = MaterialTheme.colors.onSurface
             )
         )
 
@@ -89,7 +86,7 @@ fun ConfigurationScreenContent(result: DataResult.Success<User>, onSaveChanges: 
             onValueChange = { profile.username },
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 unfocusedBorderColor = MaterialTheme.colors.onBackground,
-                unfocusedLabelColor = MaterialTheme.colors.onBackground
+                unfocusedLabelColor  = MaterialTheme.colors.onBackground
             )
         )
 
@@ -105,7 +102,7 @@ fun ConfigurationScreenContent(result: DataResult.Success<User>, onSaveChanges: 
             label = { Text(text = "Senha atual") },
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 unfocusedBorderColor = MaterialTheme.colors.onBackground,
-                unfocusedLabelColor = MaterialTheme.colors.onSurface
+                unfocusedLabelColor  = MaterialTheme.colors.onSurface
             ),
             visualTransformation = if(passwordVisible.value.not()) PasswordVisualTransformation() else VisualTransformation.None,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -128,11 +125,11 @@ fun ConfigurationScreenContent(result: DataResult.Success<User>, onSaveChanges: 
             modifier = Modifier.fillMaxWidth(0.9f))
         OutlinedTextField(modifier = Modifier.fillMaxWidth(0.9f),
             value = newPassword.value,
-            onValueChange = { newPassword.value = it },
+            onValueChange = { profile.password },
             label = { Text(text = "Nova Senha") },
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 unfocusedBorderColor = MaterialTheme.colors.onBackground,
-                unfocusedLabelColor = MaterialTheme.colors.onSurface
+                unfocusedLabelColor  = MaterialTheme.colors.onSurface
             ),
             visualTransformation = if(passwordVisible.value.not()) PasswordVisualTransformation() else VisualTransformation.None,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -158,7 +155,7 @@ fun ConfigurationScreenContent(result: DataResult.Success<User>, onSaveChanges: 
             label = { Text(text = "Confirmação da senha") },
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 unfocusedBorderColor = MaterialTheme.colors.onBackground,
-                unfocusedLabelColor = MaterialTheme.colors.onSurface
+                unfocusedLabelColor  = MaterialTheme.colors.onSurface
             ),
             visualTransformation = if(passwordVisible.value.not()) PasswordVisualTransformation() else VisualTransformation.None,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -174,7 +171,9 @@ fun ConfigurationScreenContent(result: DataResult.Success<User>, onSaveChanges: 
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        Button(onClick = onSaveChanges,
+        Button(onClick =
+            if (oldPassword.value.text == profile.password && newPassword == confirmNewPassowrd) onSaveChanges
+            else error("Senhas não correspondem"),
             modifier = Modifier.fillMaxWidth(0.8f),
             colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
         ){

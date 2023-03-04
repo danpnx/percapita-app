@@ -105,7 +105,8 @@ fun Navigator(
                 darkTheme = isSystemDarkTheme,
                 navController = navHostController,
                 onBack = { navHostController.popBackStack() },
-                onEditProfile = { navHostController.navigate(Route.CONFIG_SCREEN.name) }
+                onEditProfile = { navHostController.navigate(Route.CONFIG_SCREEN.name) },
+                onExit = { navHostController.navigate(Route.LOGIN.name) }
             )
         }
 
