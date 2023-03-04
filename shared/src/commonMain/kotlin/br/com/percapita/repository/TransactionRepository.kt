@@ -20,9 +20,8 @@ class TransactionRepository(
         emit(DataResult.Success(dataApi))
     }.updateState().flowOn(dispatcher)
 
-    suspend fun deleteTransaction(
-        financialTransaction: FinancialTransaction) = flow<DataResult<FinancialTransaction>> {
-        val dataApi = api.deleteTransaction(financialTransaction)
+    suspend fun deleteTransaction(transactionId: String) = flow<DataResult<FinancialTransaction>> {
+        val dataApi = api.deleteTransaction(transactionId)
         emit(DataResult.Success(dataApi))
     }.updateState().flowOn(dispatcher)
 
@@ -32,9 +31,8 @@ class TransactionRepository(
         emit(DataResult.Success(dataApi))
     }.updateState().flowOn(dispatcher)
 
-    suspend fun getTransactionById(
-        financialTransaction: FinancialTransaction) = flow<DataResult<FinancialTransaction>> {
-        val dataApi = api.getTransactionById(financialTransaction)
+    suspend fun getTransactionById(transactionId: String) = flow<DataResult<FinancialTransaction>> {
+        val dataApi = api.getTransactionById(transactionId)
         emit(DataResult.Success(dataApi))
     }.updateState().flowOn(dispatcher)
 
@@ -76,6 +74,12 @@ class TransactionRepository(
     suspend fun findByTag(
         financialTransaction: FinancialTransaction) = flow<DataResult<FinancialTransaction>> {
         val dataApi = api.findByTag()
+        emit(DataResult.Success(dataApi))
+    }.updateState().flowOn(dispatcher)
+
+    suspend fun editTransaction(
+        financialTransaction: FinancialTransaction) = flow<DataResult<FinancialTransaction>> {
+            val dataApi = api.editTransaction(financialTransaction)
         emit(DataResult.Success(dataApi))
     }.updateState().flowOn(dispatcher)
 
