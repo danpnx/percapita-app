@@ -1,4 +1,4 @@
-package br.com.percapita.android.screens.register_transaction
+package br.com.percapita.android.screens.transaction
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -7,8 +7,6 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExposedDropdownMenuBox
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.*
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.TextFieldDefaults
@@ -29,7 +27,6 @@ import br.com.percapita.android.util.DateUtil.DATE_MASK
 import br.com.percapita.android.util.MaskVisualTransformation
 import br.com.percapita.enums.TransactionCategory
 import androidx.compose.material.Text
-import androidx.compose.material.Icon
 import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.percapita.model.Tag
 
@@ -191,6 +188,7 @@ fun RegisterTransactionScreen(
                                   transactionDescription = description,
                                   //tagName = tag.value?.tagName ?: ""
                               )
+                        onConfirm.invoke()
                     },
                     enabled = isButtonEnabled,
                     contentPadding = PaddingValues(5.dp),
