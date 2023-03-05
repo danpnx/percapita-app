@@ -175,4 +175,10 @@ class PercapitaApi {
     suspend fun report(): Report {
         return httpClient.get("$DEFAULT_URL/report").body()
     }
+
+    suspend fun editUser(editUser: EditUser): User {
+        return httpClient.put("$DEFAULT_URL/user/edit-user") {
+            setBody(editUser)
+        }.body()
+    }
 }
