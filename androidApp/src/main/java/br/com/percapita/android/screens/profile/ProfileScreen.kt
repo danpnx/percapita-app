@@ -42,7 +42,7 @@ fun ProfileTopBar(title: String, darkTheme: Boolean, onBack: () -> Unit) {
                 )
             },
             navigationIcon = {
-                IconButton(onClick = { onBack }) {
+                IconButton(onClick = { onBack.invoke() }) {
                     Icon(imageVector = Icons.Filled.ArrowBackIosNew, contentDescription = "Voltar")
                 }
             },
