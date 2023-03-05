@@ -42,12 +42,12 @@ fun ProfileTopBar(title: String, darkTheme: Boolean, onBack: () -> Unit) {
                 )
             },
             navigationIcon = {
-                IconButton(onClick = { onBack }) {
+                IconButton(onClick = { onBack.invoke() }) {
                     Icon(imageVector = Icons.Filled.ArrowBackIosNew, contentDescription = "Voltar")
                 }
             },
             actions ={
-                Button(onClick = { onChangeTheme },
+                Button(onClick = { onChangeTheme.invoke() },
                     shape = CircleShape,
                     modifier = Modifier.padding(10.dp),
                     colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.surface)) {
@@ -72,7 +72,8 @@ fun ProfileScreen(
     darkTheme: Boolean,
     navController: NavController,
     onBack: () -> Unit,
-    onEditProfile: () -> Unit
+    onEditProfile: () -> Unit,
+    onExit: () -> Unit
 ) {
     MyApplicationTheme(darkTheme) {
 
@@ -86,7 +87,7 @@ fun ProfileScreen(
             bottomBar = { BottomBar(navController) })  {
 
             when(profile) {
-                is DataResult.Success -> ProfileScreenContent(profile as DataResult.Success<User>, onEditProfile)
+                is DataResult.Success -> ProfileScreenContent(profile as DataResult.Success<User>, onEditProfile, onExit)
                 else -> Unit
             }
 
@@ -95,7 +96,7 @@ fun ProfileScreen(
 }
 
 @Composable
-fun ProfileScreenContent(result: DataResult.Success<User>, onEditProfile: () -> Unit) {
+fun ProfileScreenContent(result: DataResult.Success<User>, onEditProfile: () -> Unit, onExit: () -> Unit) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -150,7 +151,7 @@ fun ProfileScreenContent(result: DataResult.Success<User>, onEditProfile: () -> 
             .padding(16.dp, vertical = 90.dp)
             .fillMaxSize()){
 
-        Button(onClick = { /*TODO*/ },
+        Button(onClick = { onExit.invoke() },
             modifier = Modifier.fillMaxWidth(0.8f),
             colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
         ){
@@ -167,7 +168,8 @@ fun ProfileScreen_Preview() {
             darkTheme = false,
             navController = rememberNavController(),
             onBack = {},
-            onEditProfile = {}
+            onEditProfile = {},
+            onExit = {}
         )
     }
 }
@@ -180,7 +182,8 @@ fun ProfileScreen_PreviewDark() {
             darkTheme = true,
             navController = rememberNavController(),
             onBack = {},
-            onEditProfile = {}
+            onEditProfile = {},
+            onExit = {}
         )
     }
 }
