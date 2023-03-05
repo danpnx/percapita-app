@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -23,6 +24,7 @@ import androidx.navigation.compose.rememberNavController
 import br.com.percapita.android.MyApplicationTheme
 import br.com.percapita.android.components.BottomBar
 import br.com.percapita.model.Report
+import br.com.percapita.model.User
 import br.com.percapita.utils.DataResult
 import com.github.tehras.charts.piechart.PieChart
 import com.github.tehras.charts.piechart.PieChartData
@@ -43,11 +45,12 @@ fun HomeScreen(isSystemDarkTheme: Boolean, navController: NavController) {
                     .padding(it)
                     .padding(horizontal = 10.dp),
             ) {
+
                 when(reportState) {
                     is DataResult.Success -> ContentHome(
                         reportState as DataResult.Success<Report>
                     )
-                    else -> {}
+                    else -> ContentHomeScreenEmpty()
                 }
             }
         }
@@ -80,59 +83,121 @@ fun ContentHome(result: DataResult.Success<Report>) {
             )
             Text(
                 text = "R$ ${it.value}",
-                color = if(it.value > 0) Color(0xFF00AB41) else Color(0xFFFB6969),
+                color = colorNumber(it.value),
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(start = 10.dp, top = 5.dp)
             )
         }
     }
-//
-    val slices = listOf(
-        PieChartData.Slice(10f, Color.Red),
-        PieChartData.Slice(30f, Color.Blue),
-        PieChartData.Slice(40f, Color.Magenta),
-        PieChartData.Slice(20f, Color.Green)
-    )
+}
 
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        PieChart(
-            pieChartData = PieChartData(slices),
-            modifier = Modifier
-                .height(200.dp)
-                .weight(0.5f)
-                .wrapContentWidth()
-                .padding(vertical = 50.dp),
-            sliceDrawer = SimpleSliceDrawer(sliceThickness = 100f)
-        )
-
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.Center
-        ) {
-            slices.forEach { slice ->
-                LabelItem(color = slice.color, name = "ABC (${slice.value.toInt()}%)")
-            }
-        }
+fun colorNumber(value: Double): Color {
+    return when {
+        value < 0 -> Color(0xFFFB6969)
+        value == 0.0 -> Color(0xFF000000)
+        else -> Color(0xFF00AB41)
     }
 }
 
 @Composable
-fun LabelItem(color: Color, name: String, nameColor: Color = Color.Black) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically
-    )
-    {
-        androidx.compose.material.Icon(
-            Icons.Filled.Circle,
-            contentDescription = name,
-            modifier = Modifier.height(10.dp),
-            tint = color
+fun ContentHomeScreenEmpty() {
+
+    Card(
+        shape = CardDefaults.elevatedShape,
+        elevation = CardDefaults.cardElevation(1.dp),
+        modifier = Modifier
+            .padding(top = 10.dp)
+            .height(120.dp)
+            .fillMaxWidth(),
+    ) {
+        Text(
+            text = "Saldo",
+            Modifier.padding(start = 10.dp, top = 5.dp),
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp,
         )
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(text = name, color = nameColor)
+        Divider(
+            thickness = (2.dp),
+        )
+        Text(
+            text = "R$ 0.0",
+            color = Color.Black,
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(start = 10.dp, top = 5.dp)
+        )
+    }
+
+    Card(
+        shape = CardDefaults.elevatedShape,
+        elevation = CardDefaults.cardElevation(1.dp),
+        modifier = Modifier
+            .padding(top = 10.dp)
+            .height(120.dp)
+            .fillMaxWidth(),
+    ) {
+        Text(
+            text = "Receitas",
+            Modifier.padding(start = 10.dp, top = 5.dp),
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp,
+        )
+        Divider(
+            thickness = (2.dp),
+        )
+        Text(
+            text = "R$ 0.0",
+            color = Color.Black,
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(start = 10.dp, top = 5.dp)
+        )
+    }
+
+    Card(
+        shape = CardDefaults.elevatedShape,
+        elevation = CardDefaults.cardElevation(1.dp),
+        modifier = Modifier
+            .padding(top = 10.dp)
+            .height(120.dp)
+            .fillMaxWidth(),
+    ) {
+        Text(
+            text = "Despesas",
+            Modifier.padding(start = 10.dp, top = 5.dp),
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp,
+        )
+        Divider(
+            thickness = (2.dp),
+        )
+        Text(
+            text = "R$ 0.0",
+            color = Color.Black,
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(start = 10.dp, top = 5.dp)
+        )
     }
 }
+
+//@Composable
+//fun LabelItem(color: Color, name: String, nameColor: Color = Color.Black) {
+//    Row(
+//        verticalAlignment = Alignment.CenterVertically
+//    )
+//    {
+//        androidx.compose.material.Icon(
+//            Icons.Filled.Circle,
+//            contentDescription = name,
+//            modifier = Modifier.height(10.dp),
+//            tint = color
+//        )
+//        Spacer(modifier = Modifier.width(8.dp))
+//        Text(text = name, color = nameColor)
+//    }
+//}
 
 @Composable
 @Preview
