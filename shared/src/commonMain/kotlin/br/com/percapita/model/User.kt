@@ -14,3 +14,10 @@ data class User(
 data class ProfileToken(
     val token: String
 )
+
+@Serializable
+data class EditUser(
+    val actualPassword: String,
+    val newPassword: String,
+    val newName: String
+)
