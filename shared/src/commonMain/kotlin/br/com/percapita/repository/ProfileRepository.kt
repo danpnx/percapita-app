@@ -19,12 +19,8 @@ class ProfileRepository(
         emit(DataResult.Success(dataApi))
     }.updateState().flowOn(dispacher)
 
-    suspend fun editName(user: User) = flow<DataResult<User>> {
+    suspend fun editProfile(user: User) = flow<DataResult<User>> {
         val dataApi = api.editName(user)
-        emit(DataResult.Success(dataApi))
-    }.updateState().flowOn(dispacher)
-
-    suspend fun editPassword(user: User) = flow<DataResult<User>> {
         val dataApi = api.editPassword(user)
         emit(DataResult.Success(dataApi))
     }.updateState().flowOn(dispacher)

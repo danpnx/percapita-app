@@ -21,14 +21,8 @@ class EditProfileViewModel(
     private val _profile = MutableStateFlow<DataResult<User>>(DataResult.Empty)
     val profile: StateFlow<DataResult<User>> = _profile
 
-    fun editName(user: User) = viewModelScope.launch {
-        repository.editName(user).collectLatest {
-            _profile.value = it
-        }
-    }
-
-    fun editPassword(user: User) = viewModelScope.launch {
-        repository.editPassword(user).collectLatest {
+    fun editProfile(user: User) = viewModelScope.launch {
+        repository.editProfile(user).collectLatest {
             _profile.value = it
         }
     }

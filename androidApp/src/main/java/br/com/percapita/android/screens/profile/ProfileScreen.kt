@@ -46,8 +46,8 @@ fun ProfileTopBar(title: String, darkTheme: Boolean, onBack: () -> Unit) {
                     Icon(imageVector = Icons.Filled.ArrowBackIosNew, contentDescription = "Voltar")
                 }
             },
-            actions ={
-                Button(onClick = { onChangeTheme.invoke() },
+            /*actions ={
+                Button(onClick =  onChangeTheme.invoke() ,
                     shape = CircleShape,
                     modifier = Modifier.padding(10.dp),
                     colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.surface)) {
@@ -59,7 +59,7 @@ fun ProfileTopBar(title: String, darkTheme: Boolean, onBack: () -> Unit) {
                             .padding(0.dp),
                         tint = MaterialTheme.colors.onBackground)
                 }
-            },
+            },*/
             backgroundColor = MaterialTheme.colors.background,
             modifier = Modifier.height(80.dp)
         )

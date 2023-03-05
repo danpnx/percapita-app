@@ -1,6 +1,7 @@
 package br.com.percapita.android.screens.profile
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -27,7 +28,7 @@ import br.com.percapita.utils.DataResult
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ConfigurationScreen(darkTheme: Boolean, onBack: () -> Unit, onSaveChanges: () -> Unit) {
+fun ConfigurationScreen(darkTheme: Boolean, onBack: () -> Unit) {
     MyApplicationTheme(darkTheme) {
         val viewModel: EditProfileViewModel = viewModel()
         val profile by viewModel.profile.collectAsState()
@@ -38,7 +39,7 @@ fun ConfigurationScreen(darkTheme: Boolean, onBack: () -> Unit, onSaveChanges: (
                 ) {
 
             when(profile) {
-                is DataResult.Success -> ConfigurationScreenContent(profile as DataResult.Success<User>, onSaveChanges)
+                is DataResult.Success -> ConfigurationScreenContent(profile as DataResult.Success<User>)
                 else -> Unit
             }
 
@@ -47,7 +48,7 @@ fun ConfigurationScreen(darkTheme: Boolean, onBack: () -> Unit, onSaveChanges: (
 }
 
 @Composable
-fun ConfigurationScreenContent(result: DataResult.Success<User>, onSaveChanges: () -> Unit) {
+fun ConfigurationScreenContent(result: DataResult.Success<User>) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -58,6 +59,7 @@ fun ConfigurationScreenContent(result: DataResult.Success<User>, onSaveChanges: 
         val newPassword = remember { mutableStateOf(TextFieldValue()) }
         val passwordVisible = remember { mutableStateOf(false) }
         val profile = result.data
+        val viewModel = viewModel<EditProfileViewModel>()
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -171,9 +173,12 @@ fun ConfigurationScreenContent(result: DataResult.Success<User>, onSaveChanges: 
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        Button(onClick =
-            if (oldPassword.value.text == profile.password && newPassword == confirmNewPassowrd) onSaveChanges
-            else error("Senhas não correspondem"),
+        Button(onClick = {
+            if (oldPassword.value.text == profile.password && newPassword == confirmNewPassowrd) {
+                viewModel.editProfile(profile)
+            }
+
+            else error("Senhas não correspondem")},
             modifier = Modifier.fillMaxWidth(0.8f),
             colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.primary)
         ){
@@ -185,11 +190,11 @@ fun ConfigurationScreenContent(result: DataResult.Success<User>, onSaveChanges: 
 @Composable
 @Preview
 fun EditProfileScreen_Preview() {
-    ConfigurationScreen(darkTheme = false, onBack = {}, onSaveChanges = {})
+    ConfigurationScreen(darkTheme = false, onBack = {})
 }
 
 @Composable
 @Preview
 fun EditProfileScreen_PreviewDark() {
-    ConfigurationScreen(darkTheme = true, onBack = {}, onSaveChanges = {})
+    ConfigurationScreen(darkTheme = true, onBack = {})
 }
