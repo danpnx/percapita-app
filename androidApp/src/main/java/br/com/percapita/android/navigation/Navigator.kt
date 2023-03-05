@@ -137,7 +137,7 @@ fun Navigator(
             ConfigurationScreen(
                 darkTheme = isSystemDarkTheme,
                 onBack = { navHostController.popBackStack() },
-                onSaveChanges = {}
+                onSaveChanges = { navHostController.popBackStack() }
             )
         }
     }
